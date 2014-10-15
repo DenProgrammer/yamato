@@ -1,0 +1,15 @@
+#ui-datepicker-div {
+	font-size: 82.5%;
+	font-family: "Trebuchet MS", "Arial", "Helvetica", "Verdana", "sans-serif";
+}
+
+.demo-description {
+	clear: both;
+	padding: 12px;
+	font-size: 1.3em;
+	line-height: 1.4em;
+}
+
+.ui-draggable, .ui-droppable {
+	background-position: top;
+}

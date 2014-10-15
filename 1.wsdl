@@ -1,0 +1,62 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12bind="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapbind="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.sample-package.org" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.sample-package.org" name="Sotrudniki" targetNamespace="http://www.sample-package.org">
+<types>
+	<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xs1="http://www.sample-package.org" targetNamespace="http://www.sample-package.org" attributeFormDefault="unqualified" elementFormDefault="qualified">
+		<xs:complexType name="User">
+			<xs:sequence>
+				<xs:element name="p1" type="xs:string"/>
+				<xs:element name="p2" type="xs:string" nillable="true"/>
+				<xs:element name="p3" type="xs:string" nillable="true"/>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:complexType name="UserList">
+			<xs:sequence>
+				<xs:element name="User1" type="tns:User" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:element name="GetListOrders">
+			<xs:complexType>
+				<xs:sequence>
+					<xs:element name="СтрокаПоиска" type="xs:string" nillable="true"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+		<xs:element name="GetListOrdersResponse">
+			<xs:complexType>
+				<xs:sequence>
+					<xs:element name="parameters" type="tns:UserList"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+	</xs:schema>
+</types>
+<message name="GetListOrdersRequestMessage"/>
+<message name="GetListOrdersResponseMessage">
+	<part name="parameters" element="tns:GetListOrdersResponse"/>
+</message>
+<portType name="SotrudnikiPortType">
+	<operation name="GetListOrders">
+		<input message="tns:GetListOrdersRequestMessage"/>
+		<output message="tns:GetListOrdersResponseMessage"/>
+	</operation>
+</portType>
+<binding name="SotrudnikiSoapBinding" type="tns:SotrudnikiPortType">
+	<soapbind:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="GetListOrders">
+		<soapbind:operation style="document" soapAction="http://www.sample-package.org#Sotrudniki:GetListOrders"/>
+		<input>
+			<soapbind:body use="literal"/>
+		</input>
+		<output>
+			<soapbind:body use="literal"/>
+		</output>
+	</operation>
+</binding>
+<service name="Sotrudniki">
+	<port name="SotrudnikiSoap" binding="tns:SotrudnikiSoapBinding">
+		<documentation>
+			<wsi:Claim xmlns:wsi="http://ws-i.org/schemas/conformanceClaim/" conformsTo="http://ws-i.org/profiles/basic/1.1"/>
+		</documentation>
+		<soapbind:address location="http://192.168.1.105/yamato/wsdl.php"/>
+	</port>
+</service>
+</definitions>

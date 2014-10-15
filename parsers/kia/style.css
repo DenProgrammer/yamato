@@ -1,0 +1,83 @@
+BODY {
+	FONT-SIZE: 13px; FONT-FAMILY: Arial, Helvetica, sans-serif;
+	color:#000000;
+}
+INPUT {
+	FONT-SIZE: 11px; FONT-FAMILY:Arial, Helvetica, sans-serif
+}
+a {
+	COLOR: #000000; FONT-FAMILY:Arial, Helvetica, sans-serif; TEXT-DECORATION: none; font-size:12px;cursor:pointer;
+}
+a:hover {
+	TEXT-DECORATION: underline
+}
+.headerR {
+	FONT-SIZE: 8pt; COLOR: #e30000; FONT-FAMILY:Arial, Helvetica, sans-serif
+}
+.headerBTL {
+	FONT-SIZE: 11pt; COLOR: #1a5888; FONT-FAMILY:Arial, sans-serif
+}
+.headerb {
+	COLOR: #318fb1
+}
+.text {
+	FONT-SIZE: 8pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+.smalli {
+	FONT-SIZE: xx-small; COLOR: #7f7f7f; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+.smallg {
+	FONT-SIZE: 8pt; COLOR: #7f7f7f; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+.smallb {
+	FONT-SIZE: xx-small; COLOR: #000000; FONT-FAMILY:Arial, Helvetica, sans-serif
+}
+.pad10 {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 10px; PADDING-TOP: 10px
+}
+.tble {
+	FONT-SIZE: 8pt; COLOR: #ffffff; BORDER-BOTTOM: #aab2bc 2px solid; BACKGROUND-COLOR: #c3ccd9
+}
+.form1 {
+	FONT-SIZE: 11px; WIDTH: 170px; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+.cart
+{ font-family:		Tahoma;
+  font-size:		11px;
+  BORDER-BOTTOM:	0px solid;	
+  BORDER-LEFT:		0px solid;
+  BORDER-RIGHT:		0px solid;	
+  BORDER-TOP:		0px solid;
+  margin:			1px;
+  font-weight:		bold;
+  color:			#8C0000;
+  background-color:  transparent;
+}
+.cat
+{ font-size:		16px;
+}
+.big
+{ font-size:		18px;
+  text-decoration:		none;
+}
+h1 {
+    text-align: left;
+	FONT-SIZE: 14pt;
+}
+h2 {
+    margin-top: 1em;
+	FONT-SIZE: 12pt;
+}
+h3 {
+    margin-top: 1em;
+    margin-bottom: 8;
+    font-size: medium;
+	FONT-SIZE: 10pt;
+}
+h4 {
+    font-weight: bold;
+	FONT-SIZE: 8pt;
+}
+scriptus,styleus{
+	display:none;
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<name>Registered User Type</name>
+	<params>
+		<param name="language" type="languages" client="site" default="" label="Front-end Language" description="paramLanguage" />
+		<param name="timezone" type="timezones" default="" label="Time Zone" description="Time Zone for this User" />
+		<param name="addres" type="text" default="" label="addres" description="user addres" />
+		<param name="phone" type="text" default="" label="phone" description="user phone" />
+		<param name="closesectionaccess" type="list" default="" label="CLOSSECTIONACCESS" description="CLOSSECTIONACCESS_DESC" >
+			<option value="0">DENIED</option>
+			<option value="1">ALLOWED</option>
+		</param>
+		<param name="closesectionlevel" type="list" default="" label="CLOSSECTIONLEVEL" description="CLOSSECTIONLEVEL_DESC" >
+			<option value="0">SELECTEDLEVEL</option>
+			<option value="1">MANAGER</option>
+			<option value="2">ADMIN</option>
+			<option value="3">SUPERADMIN</option>
+		</param>
+	</params>
+</form>

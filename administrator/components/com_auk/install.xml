@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="component" version="1.5.0">
+	<name>auk</name>
+	<author>Denis Shiryaev</author>
+	<creationDate>Jule 2013</creationDate>
+	<copyright>(C) 2005 - 2011 Open Source Matters. All rights reserved.	</copyright>
+	<license>GNU General Public License version 2 or later; see	LICENSE.txt</license>
+	<authorEmail>fenix-10@rambler.ru</authorEmail>
+	<authorUrl></authorUrl>
+	<version>1.5.0</version>
+	<description>Аукционы на японском сайте</description>
+
+	<files folder="site">
+		<filename>auk.php</filename>
+		<filename>controller.php</filename>
+		<filename>index.html</filename>
+		<folder>views</folder>
+		<folder>models</folder>
+	</files>
+	<administration>
+		<menu>aukcion</menu>
+		<files folder="admin">
+			<filename>auk.php</filename>
+			<filename>controller.php</filename>
+			<filename>index.html</filename>
+			<folder>views</folder>
+			<folder>models</folder>
+		</files>
+	</administration>
+</install>
+
+

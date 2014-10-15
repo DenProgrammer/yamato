@@ -1,0 +1,61 @@
+html, body{
+	font-family: Verdana;
+	font-color:#000000;
+	font-size: 16px;
+}
+.print-content{
+	width: 1000px;
+	border: solid 1px transparent;
+	margin: 0 auto;
+}
+.print-content div.head{
+	height: 100px;
+}
+.print-content div.head_text{
+	float: right;
+	width: 450px;
+	text-align: right;
+}
+.print-content img{
+	margin-top: 15px;
+}
+.print-content hr{
+	border: none;
+	border-top: solid 1px #ababab;
+	height: 0px;
+	clear: both;
+}
+.print-content div.topinfo{
+	height: 40px;
+	font-size: 30px;
+}
+.print-content div.topinfo div.title{
+	display: inline-block;
+	float: left;
+}
+.print-content div.topinfo div.price{
+	display: inline-block;
+	float: right;
+}
+.print-content img.mainimage{
+	float: left;
+    margin: 3px 0 0 3px;
+    width: 486px;
+}
+.print-content img.image{
+	float: left;
+    margin: 3px;
+    vertical-align: top;
+    width: 240px;
+}
+.avtoparams{
+	width: 350px;
+}
+.avtoparams tr td:first-child{
+	text-align: right;
+	padding-right: 15px;
+	line-height: 22px;
+}
+.avtoparams tr td:last-child{
+	font-weight: bold;
+}

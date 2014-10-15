@@ -1,0 +1,4 @@
+http://yamato/index.php?option=com_sincronise&type=loadAll
+http://yamato/index.php?option=com_sincronise&type=loadItem&obj=user&id=82eb2f9d-9aa2-11e1-8d6a-001636e53250
+http://yamato/index.php?option=com_sincronise&type=loadItem&obj=cars&id=82eb2f9d-9aa2-11e1-8d6a-001636e53250
+http://yamato/index.php?option=com_sincronise&type=create1COrder&order_id=1&link=82eb2f9d-9aa2-11e1-8d6a-001636e53250

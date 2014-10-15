@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<name>Author User Type</name>
+	<params>
+		<param name="language" type="languages" client="site" default="" label="Front-end Language" description="paramLanguage" />
+		<param name="editor" type="editors" default="" label="User Editor" description="WYSIWYG Editor for this User" />
+		<param name="helpsite" type="helpsites" default="" label="Help Site" description="Help Site for this User" />
+		<param name="timezone" type="timezones" default="" label="Time Zone" description="Time Zone for this User" />
+		<param name="closesectionaccess" type="list" default="" label="CLOSSECTIONACCESS" description="CLOSSECTIONACCESS_DESC" >
+			<option value="0">DENIED</option>
+			<option value="1">ALLOWED</option>
+		</param>
+		<param name="closesectionlevel" type="list" default="" label="CLOSSECTIONLEVEL" description="CLOSSECTIONLEVEL_DESC" >
+			<option value="0">SELECTEDLEVEL</option>
+			<option value="1">MANAGER</option>
+			<option value="2">ADMIN</option>
+			<option value="3">SUPERADMIN</option>
+		</param>
+	</params>
+</form>

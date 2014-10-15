@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<params>
+		<param name="userid" type="text" default="0" label="COM_AUK_USERID" description="COM_AUK_USERID_DESC"></param>
+		<param name="passwd" type="text" default="" label="COM_AUK_PASSWD" description="COM_AUK_PASSWD_DESC" />
+	</params>
+</config>

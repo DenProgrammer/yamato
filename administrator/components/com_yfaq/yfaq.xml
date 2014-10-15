@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="component" version="1.5.0">
+	<name>yfaq</name>
+	<author>Ширяев Денис</author>
+	<creationDate>Март 2013</creationDate>
+	<copyright>(C) 2005 - 2012 Open Source Matters. All rights reserved.	</copyright>
+	<license>GNU General Public License version 2 or later; see	LICENSE.txt</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>fenix-10@rambler.ru</authorUrl>
+	<version>2.5.0</version>
+	<description>компонент вопрос-ответ</description>
+
+	<files folder="site">
+		<filename>yfaq.php</filename>
+		<filename>controller.php</filename>
+		<filename>index.html</filename>
+		<folder>views</folder>
+		<folder>models</folder>
+		<folder>images</folder>
+	</files>
+	<administration>
+		<menu>yfaq</menu>
+		<files folder="admin">
+			<filename>yfaq.php</filename>
+			<filename>controller.php</filename>
+			<filename>index.html</filename>
+			<folder>views</folder>
+			<folder>models</folder>
+		</files>
+	</administration>
+</install>
