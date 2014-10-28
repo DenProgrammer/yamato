@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 */
-
+error_reporting(0);
 // Set flag that this is a parent file
 define( '_JEXEC', 1 );
 
