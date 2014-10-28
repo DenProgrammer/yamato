@@ -469,7 +469,7 @@ class SincroniseModelSincronise extends JModel {
 
         $db = JFactory::getDBO();
 
-        $sql     = "SELECT `currency_id` FROM `#__vm_currency` WHERE `currency_link`='$link'";
+        $sql     = "SELECT `currency_id` FROM `#__vm_currency` WHERE `link`='$link'";
         $db->setQuery($sql);
         $checkid = $db->LoadResult();
 
