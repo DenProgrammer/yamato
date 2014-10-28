@@ -44,6 +44,7 @@ class Report {
     }
 
     public function stop($result_data = null) {
+        $result_data = '';//str_replace("'", "\\'", $result_data);
         $finish_date_unix = time();
         $this->mk_finish  = microtime(true);
 
