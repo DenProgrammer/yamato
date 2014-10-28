@@ -19,6 +19,7 @@ define('JPATH_BASE', dirname(__FILE__));
 
 define('DS', DIRECTORY_SEPARATOR);
 
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_STRICT);
 function pr($var) {
     echo '<div style="text-align:left;"><pre>';
     print_r($var);
