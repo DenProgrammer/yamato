@@ -1,8 +1,8 @@
-AuthType Basic  
-AuthName "Private zone. Only for administrator!"
-AuthUserFile  D:/xampp/htdocs/dev.yamato.kg/administrator/.htpasswd 
-require valid-user 
-
-<Files .htpasswd>
-   deny from all
-</Files>
+#AuthType Basic  
+#AuthName "Private zone. Only for administrator!"
+#AuthUserFile  D:/xampp/htdocs/dev.yamato.kg/administrator/.htpasswd 
+#require valid-user 
+#
+#<Files .htpasswd>
+#   deny from all
+#</Files>
