@@ -102,7 +102,7 @@ class ManagerViewManager extends JView {
 			$_SESSION['filter']->offset = intval($offset);
 		}
 		if (isset($cagent)) {
-			$_SESSION['filter']->cagent = intval($cagent);
+			$_SESSION['filter']->cagent = $cagent;
 		}
 		if (isset($all)) {
 			$_SESSION['filter']->status['all'] = $all;
