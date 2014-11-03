@@ -32,10 +32,10 @@ defined('_JEXEC') or die('Restricted access');
         jQuery(document).ready(function($) {
 
             $('#btndown').click(function() {
-                $("html").animate({scrollTop: document.body.scrollHeight}, 1000);
+                $("html, body").animate({scrollTop: document.body.scrollHeight}, 1000);
             });
             $('#btnup').hide().click(function() {
-                $("html").animate({scrollTop: 0}, 1000);
+                $("html, body").animate({scrollTop: 0}, 1000);
             });
             $(window).scroll(function() {
                 if ($(window).scrollTop() <= 400) {

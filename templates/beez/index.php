@@ -119,10 +119,10 @@ if ($ajax == 1) {
                     jQuery("ul.wmcategory li[rel=" + view + ']').addClass('active');
 
                 $('#btndown').click(function() {
-                    $("html").animate({scrollTop: document.body.scrollHeight}, 1000);
+                    $("html, body").animate({scrollTop: document.body.scrollHeight}, 1000);
                 });
                 $('#btnup').hide().click(function() {
-                    $("html").animate({scrollTop: 0}, 1000);
+                    $("html, body").animate({scrollTop: 0}, 1000);
                 });
                 $(window).scroll(function() {
                     if ($(window).scrollTop() <= 400) {
@@ -135,25 +135,22 @@ if ($ajax == 1) {
                 });
             });
 
+            (function(i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function() {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                        m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-42088222-1', 'yamato.kg');
+            ga('send', 'pageview');
         </script>
     </head>
-    <script>
-        (function(i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function() {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                    m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-        ga('create', 'UA-42088222-1', 'yamato.kg');
-        ga('send', 'pageview');
-
-    </script>
     <body>
         <style>
             #btnupdown{
