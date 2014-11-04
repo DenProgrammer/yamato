@@ -1353,7 +1353,7 @@ class SincroniseController extends JController {
 
             $updateimg = true;
 
-//            pr($obj);
+            pr($obj);
             $model->updateProduct($obj, $updateimg);
         }
     }
