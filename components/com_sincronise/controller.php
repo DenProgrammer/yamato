@@ -1305,8 +1305,8 @@ class SincroniseController extends JController {
             $img    = '';
             if ($images->row)
                 foreach ($images->row as $z) {
-                    $img     = strval($z->Value[0]);
-                    $image[] = 'http://image.yamato.kg/' . basename($img);
+                    $img     = str_replace('D:\xampp\htdocs\image.yamato.kg\\', '', strval($z->Value[0]));
+                    $image[] = 'http://image.yamato.kg/' . $img;
                 }
             $obj->product_image = $image;
 
@@ -1403,8 +1403,8 @@ class SincroniseController extends JController {
             $img    = '';
             if ($images->row)
                 foreach ($images->row as $z) {
-                    $img     = strval($z->Value[0]);
-                    $image[] = 'http://image.yamato.kg/' . basename($img);
+                    $img     = str_replace('D:\xampp\htdocs\image.yamato.kg\\', '', strval($z->Value[0]));
+                    $image[] = 'http://image.yamato.kg/' . $img;
                 }
             $obj->product_image         = $image;
             $obj->product_in_stock      = $item->Value[4] . '';
@@ -1498,8 +1498,8 @@ class SincroniseController extends JController {
             $img    = '';
             if ($images->row)
                 foreach ($images->row as $z) {
-                    $img     = strval($z->Value[0]);
-                    $image[] = 'http://image.yamato.kg/' . basename($img);
+                    $img     = str_replace('D:\xampp\htdocs\image.yamato.kg\\', '', strval($z->Value[0]));
+                    $image[] = 'http://image.yamato.kg/' . $img;
                 }
             $obj->product_image         = $image;
             $obj->product_in_stock      = $item->Value[4] . '';
