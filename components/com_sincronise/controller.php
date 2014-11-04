@@ -1305,8 +1305,8 @@ class SincroniseController extends JController {
             $img    = '';
             if ($images->row)
                 foreach ($images->row as $z) {
-                    $img     = str_replace('D:\xampp\htdocs\image.yamato.kg\\', '', strval($z->Value[0]));
-                    $image[] = 'http://image.yamato.kg/' . $img;
+                    $img     = str_replace('\\', '/', strval($z->Value[0]));
+                    $image[] = 'http://image.yamato.kg/' . basename($img);
                 }
             $obj->product_image = $image;
 
@@ -1353,7 +1353,9 @@ class SincroniseController extends JController {
 
             $updateimg = true;
 
-            pr($obj);
+            if (JRequest::getVar('debug')){
+                pr($obj);
+            }
             $model->updateProduct($obj, $updateimg);
         }
     }
@@ -1403,8 +1405,8 @@ class SincroniseController extends JController {
             $img    = '';
             if ($images->row)
                 foreach ($images->row as $z) {
-                    $img     = str_replace('D:\xampp\htdocs\image.yamato.kg\\', '', strval($z->Value[0]));
-                    $image[] = 'http://image.yamato.kg/' . $img;
+                    $img     = str_replace('\\', '/', strval($z->Value[0]));
+                    $image[] = 'http://image.yamato.kg/' . basename($img);
                 }
             $obj->product_image         = $image;
             $obj->product_in_stock      = $item->Value[4] . '';
@@ -1445,7 +1447,9 @@ class SincroniseController extends JController {
 
             $updateimg = true;
 
-//            pr($obj);
+            if (JRequest::getVar('debug')){
+                pr($obj);
+            }
             $model->updateProduct($obj, $updateimg);
         }
     }
@@ -1498,8 +1502,8 @@ class SincroniseController extends JController {
             $img    = '';
             if ($images->row)
                 foreach ($images->row as $z) {
-                    $img     = str_replace('D:\xampp\htdocs\image.yamato.kg\\', '', strval($z->Value[0]));
-                    $image[] = 'http://image.yamato.kg/' . $img;
+                    $img     = str_replace('\\', '/', strval($z->Value[0]));
+                    $image[] = 'http://image.yamato.kg/' . basename($img);
                 }
             $obj->product_image         = $image;
             $obj->product_in_stock      = $item->Value[4] . '';
@@ -1539,7 +1543,9 @@ class SincroniseController extends JController {
 
             $updateimg = true;
 
-//            pr($obj);
+            if (JRequest::getVar('debug')){
+                pr($obj);
+            }
             $model->updateProduct($obj, $updateimg);
         }
     }
