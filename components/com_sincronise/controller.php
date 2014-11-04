@@ -1240,7 +1240,7 @@ class SincroniseController extends JController {
                 $obj->Prodan      = 0;
                 $obj->DataProdaji = 0;
             }
-            //pr($obj);
+//            pr($obj);
             $model->updateProduct($obj, $updateimg);
         }
 
@@ -1293,7 +1293,10 @@ class SincroniseController extends JController {
 
         foreach ($xml->row as $k => $item) {
             unset($obj);
-            $image               = array();
+            $image = array();
+
+            $obj = new stdClass();
+
             $obj->link           = $item->Value[$columns['Link']] . '';
             $obj->product_sku    = $item->Value[$columns['Code']] . '';
             $obj->product_s_desc = $item->Value[$columns['Description']] . '';
@@ -1303,8 +1306,7 @@ class SincroniseController extends JController {
             if ($images->row)
                 foreach ($images->row as $z) {
                     $img     = strval($z->Value[0]);
-                    $img     = str_replace('\\', '/', $img);
-                    $image[] = str_ireplace('D:/xampp/htdocs/', 'http://', $img);
+                    $image[] = 'http://image.yamato.kg/' . basename($img);
                 }
             $obj->product_image = $image;
 
@@ -1351,7 +1353,7 @@ class SincroniseController extends JController {
 
             $updateimg = true;
 
-            //pr($obj);
+//            pr($obj);
             $model->updateProduct($obj, $updateimg);
         }
     }
@@ -1375,10 +1377,10 @@ class SincroniseController extends JController {
 
         if (!$id > 0) {
             $sql = 'UPDATE  `#__vm_product` SET  `product_publish` =  \'N\' WHERE `product_id` IN (
-												SELECT `product_id` 
-												FROM `#__vm_product_category_xref` 
-												WHERE `category_id`=15
-															)';
+                        SELECT `product_id` 
+                        FROM `#__vm_product_category_xref` 
+                        WHERE `category_id`=15
+                    )';
             $db->setQuery($sql);
             $db->query();
         }
@@ -1391,6 +1393,9 @@ class SincroniseController extends JController {
         foreach ($xml->row as $k => $item) {
             unset($obj);
             unset($image);
+
+            $obj = new stdClass();
+
             $obj->link        = $item->Value[0] . '';
             $obj->product_sku = $item->Value[2] . '';
 
@@ -1399,8 +1404,7 @@ class SincroniseController extends JController {
             if ($images->row)
                 foreach ($images->row as $z) {
                     $img     = strval($z->Value[0]);
-                    $img     = str_replace('\\', '/', $img);
-                    $image[] = str_ireplace('D:/xampp/htdocs/', 'http://', $img);
+                    $image[] = 'http://image.yamato.kg/' . basename($img);
                 }
             $obj->product_image         = $image;
             $obj->product_in_stock      = $item->Value[4] . '';
@@ -1441,15 +1445,17 @@ class SincroniseController extends JController {
 
             $updateimg = true;
 
-            //pr($obj);
+//            pr($obj);
             $model->updateProduct($obj, $updateimg);
         }
     }
 
     //загузка шин
     public function loadRezina($id = null) {
-        if (!$id)
-            $id          = JRequest::getVar('link');
+        if (!$id) {
+            $id = JRequest::getVar('link');
+        }
+
         $updateforce = JRequest::getVar('updateforce');
 
         header('Content-type: text/html; charset=utf-8');
@@ -1465,10 +1471,10 @@ class SincroniseController extends JController {
 
         if (!$id > 0) {
             $sql = 'UPDATE  `#__vm_product` SET  `product_publish` =  \'N\' WHERE `product_id` IN (
-												SELECT `product_id` 
-												FROM `#__vm_product_category_xref` 
-												WHERE `category_id`=17
-															)';
+                        SELECT `product_id` 
+                        FROM `#__vm_product_category_xref` 
+                        WHERE `category_id`=17
+                    )';
             $db->setQuery($sql);
             $db->query();
         }
@@ -1481,6 +1487,9 @@ class SincroniseController extends JController {
         foreach ($xml->row as $k => $item) {
             unset($obj);
             unset($image);
+
+            $obj = new stdClass();
+
             $obj->link           = $item->Value[0] . '';
             $obj->product_sku    = $item->Value[2] . '';
             $obj->product_s_desc = $item->Value[7] . '';
@@ -1490,8 +1499,7 @@ class SincroniseController extends JController {
             if ($images->row)
                 foreach ($images->row as $z) {
                     $img     = strval($z->Value[0]);
-                    $img     = str_replace('\\', '/', $img);
-                    $image[] = str_ireplace('D:/xampp/htdocs/', 'http://', $img);
+                    $image[] = 'http://image.yamato.kg/' . basename($img);
                 }
             $obj->product_image         = $image;
             $obj->product_in_stock      = $item->Value[4] . '';
@@ -1531,7 +1539,7 @@ class SincroniseController extends JController {
 
             $updateimg = true;
 
-            //pr($obj);
+//            pr($obj);
             $model->updateProduct($obj, $updateimg);
         }
     }
