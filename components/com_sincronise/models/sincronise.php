@@ -121,11 +121,16 @@ class SincroniseModelSincronise extends JModel {
         $DataDostavki          = $p_obj->DataDostavki;
         $DataPokupki           = $p_obj->DataPokupki;
         $Postavshik            = $p_obj->Postavshik;
+        $product_width         = (isset($p_obj->product_width)) ? $p_obj->product_width : 0;
+        $product_height        = (isset($p_obj->product_height)) ? $p_obj->product_height : 0;
+        $product_length        = (isset($p_obj->product_length)) ? $p_obj->product_length : 0;
 
-        if (!$product_model)
+        if (!$product_model) {
             $product_model = 'NONE';
-        if (!$marka)
-            $marka         = 'NONE';
+        }
+        if (!$marka) {
+            $marka = 'NONE';
+        }
 
         if ($product_model) {
             $sql     = "SELECT `id` FROM `#__models` WHERE `title`='$product_model'";
@@ -215,8 +220,9 @@ class SincroniseModelSincronise extends JModel {
 
 
         if ($Prodan == 1) {
-            if (($DataProdaji > 0) and (time() - $DataProdaji > (4 * 24 * 3600)))
+            if (($DataProdaji > 0) and (time() - $DataProdaji > (4 * 24 * 3600))) {
                 $product_publish = 'N';
+            }
         }
 
         if ($p_obj->product_weight_uom) {
@@ -233,6 +239,7 @@ class SincroniseModelSincronise extends JModel {
                 `DneiSMomentaPokupki` = '$DneiSMomentaPokupki', `Sebestoimost` = '$Sebestoimost', `group_uom` = '$group_uom',
                 `TipPoSostavu` = '$TipPoSostavu', `TipPoNaznacheniyu` = '$TipPoNaznacheniyu', `Razmer` = '$Razmer',
                 `group_article` = '$group_article', `DataDostavki` = '$DataDostavki', `DataPokupki` = '$DataPokupki',
+                `product_width` = '$product_width', `product_height` = '$product_height', `product_length` = '$product_length',
                 `Postavshik` = '$Postavshik'
                 $dopsql
                 WHERE `product_id`=$product_id";

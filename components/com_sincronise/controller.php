@@ -166,6 +166,11 @@ class SincroniseController extends JController {
 
                         break;
                     }
+                case 'loadManufacturer': {
+                        $this->loadAllManufacturer();
+
+                        break;
+                    }
                 case 'getballans': {
                         $user = JFactory::getUser();
                         $sql  = 'SELECT `link` FROM `#__users` WHERE `id`=' . $user->id;
@@ -1353,7 +1358,7 @@ class SincroniseController extends JController {
 
             $updateimg = true;
 
-            if (JRequest::getVar('debug')){
+            if (JRequest::getVar('debug')) {
                 pr($obj);
             }
             $model->updateProduct($obj, $updateimg);
@@ -1447,7 +1452,7 @@ class SincroniseController extends JController {
 
             $updateimg = true;
 
-            if (JRequest::getVar('debug')){
+            if (JRequest::getVar('debug')) {
                 pr($obj);
             }
             $model->updateProduct($obj, $updateimg);
@@ -1483,9 +1488,19 @@ class SincroniseController extends JController {
             $db->query();
         }
         $string = $obj->return . '';
-        //echo $string;
-        $xml    = new SimpleXMLElement($string);
 
+        $xml = new SimpleXMLElement($string);
+
+        $columns = array();
+        $i       = 0;
+        foreach ($xml->column as $k => $item) {
+            $columns[strval($item->Name)] = $i;
+            $i++;
+        }
+
+        if (JRequest::getVar('debug')) {
+            pr($columns);
+        }
         $model     = new SincroniseModelSincronise;
         $model->db = $db;
         foreach ($xml->row as $k => $item) {
@@ -1494,23 +1509,42 @@ class SincroniseController extends JController {
 
             $obj = new stdClass();
 
-            $obj->link           = $item->Value[0] . '';
-            $obj->product_sku    = $item->Value[2] . '';
-            $obj->product_s_desc = $item->Value[7] . '';
+            $obj->link           = $item->Value[$columns['Link']] . '';
+            $obj->product_sku    = $item->Value[$columns['Code']] . '';
+            $obj->group_article  = $item->Value[$columns['Article']] . '';
+            $obj->product_s_desc = $item->Value[$columns['Description']] . '';
 
             $images = $item->Value[6];
             $img    = '';
             if ($images->row)
                 foreach ($images->row as $z) {
-                    $img     = str_replace('\\', '/', strval($z->Value[0]));
+                    $img     = str_replace('\\', '/', strval($z->Value[$columns['Link']]));
                     $image[] = 'http://image.yamato.kg/' . basename($img);
                 }
             $obj->product_image         = $image;
-            $obj->product_in_stock      = $item->Value[4] . '';
-            $obj->product_name          = trim($item->Value[1] . '');
-            $obj->product_price         = $item->Value[3] . '';
+            $obj->product_in_stock      = $item->Value[$columns['Kolichestvo']] . '';
+            $obj->product_name          = trim($item->Value[$columns['Name']] . '');
+            $obj->product_price         = $item->Value[$columns['Cena']] . '';
             $obj->product_currency_link = '';
-            $obj->product_currency      = $item->Value[5] . '';
+            $obj->product_currency      = $item->Value[$columns['Valyuta']] . '';
+
+            $obj->marka = '';
+            if (strpos($obj->product_name, 'HANKOOK')) {
+                $obj->marka = 'HANKOOK';
+            } elseif (strpos($obj->product_name, 'NEXEN')) {
+                $obj->marka = 'NEXEN';
+            } elseif (strpos($obj->product_name, 'KUMHO')) {
+                $obj->marka = 'KUMHO';
+            } elseif (strpos($obj->product_name, 'Yokohama')) {
+                $obj->marka = 'Yokohama';
+            }
+
+            $sizes = array();
+            preg_match('/([0-9]{1,3})(\/)([0-9]{1,3})(\/R)([0-9]{1,2})/', $obj->product_name, $sizes);
+
+            $obj->product_width  = (isset($sizes[1])) ? $sizes[1] : 0;
+            $obj->product_height = (isset($sizes[3])) ? $sizes[3] : 0;
+            $obj->product_length = (isset($sizes[5])) ? $sizes[5] : 0;
 
             if ($obj->product_currency == 'Сом') {
                 $kurs_usd = $currency->USD;
@@ -1521,7 +1555,6 @@ class SincroniseController extends JController {
 
             $obj->product_publish      = 'Y';
             $obj->product_category_id  = 17;
-            $obj->marka                = '';
             $obj->model                = '';
             $obj->year                 = 0;
             $obj->product_desc         = '';
@@ -1539,14 +1572,11 @@ class SincroniseController extends JController {
             $obj->product_type         = 'rezina';
             $obj->Prodan               = 0;
             $obj->DataProdaji          = 0;
-            $PerezagruzitFoto          = trim($item->Value[8] . '');
 
-            $updateimg = true;
-
-            if (JRequest::getVar('debug')){
+            if (JRequest::getVar('debug')) {
                 pr($obj);
             }
-            $model->updateProduct($obj, $updateimg);
+            $model->updateProduct($obj);
         }
     }
 
@@ -1781,9 +1811,9 @@ class SincroniseController extends JController {
         $dop_param = array('login' => $this->user, 'password' => $this->pass);
         $client    = new SoapClient($this->url, $dop_param);
         $param     = array('ID' => '');
-        $obj       = $client->GetListOfManufacturer($param);
+        $data      = $client->GetListOfManufacturer($param);
 
-        $rss = new XML($obj->return);
+        $rss = new XML($data->return);
 
         $rows = array();
         for ($i = 0; $i < count($rss->ValueTable->column); $i++) {
@@ -1805,13 +1835,15 @@ class SincroniseController extends JController {
                 $model[$id][$v] = $val;
             }
         }
-        $i = 0;
+
+        $obj = new stdClass();
         foreach ($model as $k => $item) {
-            $i++;
-            unset($obj);
             $obj->link = $item['Link'];
             $obj->name = $item['Name'];
 
+            if (JRequest::getVar('debug')) {
+                pr($obj);
+            }
             SincroniseModelSincronise::updateManufacturer($obj);
         }
     }

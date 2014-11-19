@@ -25,6 +25,8 @@ $sql         = 'SELECT `category_id` FROM `#__vm_product_category_xref` WHERE `p
 $db->setQuery($sql);
 $category_id = $db->LoadResult();
 
+
+
 $sql    = 'SELECT `product_id`, `product_thumb_image`, `Razmer`, `group_uom` 
             FROM `#__vm_product` 
             WHERE `group_article`=\'' . $prod->group_article . '\' AND `product_id` <> ' . $product_id . ' AND `product_publish` = \'Y\' 
@@ -90,11 +92,11 @@ $group_url = 'index.php?page=shop.product_details&option=com_virtuemart&flypage=
                         <img width="278" border="0" alt="<?php echo $prod->product_name; ?>" title="<?php echo $prod->product_name; ?>" src="<?php echo $prod->product_thumb_image; ?>">
                     </a>
                     <div style="margin-top:10px;text-align:left;" class="additionalimages">
-<?php foreach ($images as $image) { ?>
+                        <?php foreach ($images as $image) { ?>
                             <a rel="lightbox[product<?php echo $image->file_product_id; ?>]" title="<?php echo $prod->product_name; ?>" href="<?php echo $image->file_url; ?>">
                                 <img width="115" border="0" class="browseProductImage" alt="" src="<?php echo $image->file_url; ?>">
                             </a>
-<?php } ?>
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="meashurements">
@@ -103,9 +105,9 @@ $group_url = 'index.php?page=shop.product_details&option=com_virtuemart&flypage=
                         foreach ($groups as $group) {
                             $url = $group->product_thumb_image;
                             echo '<a href="' . $group_url . '&product_id=' . $group->product_id . '">
-						<img src="' . $url . '" />
-						<div>' . $group->Razmer . ' ' . $group->group_uom . '</div>
-					</a>';
+                                        <img src="' . $url . '" />
+                                        <div>' . $group->Razmer . ' ' . $group->group_uom . '</div>
+                                </a>';
                         }
                     ?>
                 </div>
@@ -117,17 +119,19 @@ $group_url = 'index.php?page=shop.product_details&option=com_virtuemart&flypage=
             <td valign="top" align="left">
                 <h1 class="product_name">
                     <span class="marka">
-                <?php echo JString::strtolower($prod->product_name); ?>
+                        <?php echo JString::strtolower($prod->product_name); ?>
                     </span>
                 </h1>	
-                    <?php echo $prod->Razmer . ' ' . $prod->product_weight_uom ?>
+                <?php echo $prod->Razmer . ' ' . $prod->product_weight_uom ?>
                 <br />
                 <div class="detprice">
                     <?php
-                    if ($prod->price > 0)
+                    if ($prod->price > 0){
                         echo 'Цена: ' . $product_price;
-                    if ($prod->product_discount_id > 0)
+                    }
+                    if ($prod->product_discount_id > 0){
                         echo '<img class="discount2" src="images/discount.png" />';
+                    }
                     ?>
                 </div>
                 <br>
