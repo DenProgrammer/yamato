@@ -34,7 +34,7 @@ $db->setQuery($query);
 $length = $db->loadObjectList();
 ?>
 <div class="calctyres">
-    <h2>Фильтр шин</h2>
+    <h2>Подбор шин</h2>
     <div class="calctyres_row">
         <select id="calctyres_marka">
             <option></option>
@@ -86,7 +86,8 @@ $length = $db->loadObjectList();
             </select>
         </div>
     </div>
-    <input type="button" value="Подобрать" />
+    <input name="send" type="button" value="Подобрать" />
+    <input name="reset" type="button" value="Сбросить" />
 </div>
 <style>
     div.calctyres{
@@ -113,7 +114,7 @@ $length = $db->loadObjectList();
         background: linear-gradient(to bottom, #f90000 30%, #990000 100%) repeat-x scroll 0 0 #ed0000;
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
         color: #fff;
-        padding: 6px 25px;
+        padding: 5px 10px;
         margin: 8px auto;
         cursor: pointer;
     }
@@ -148,7 +149,7 @@ $length = $db->loadObjectList();
 </style>
 <script>
     jQuery(document).ready(function($) {
-        $('div.calctyres input').click(function() {
+        $('div.calctyres input[name="send"]').click(function() {
             var marka = $('#calctyres_marka').val();
             var width = $('#calctyres_width').val();
             var height = $('#calctyres_height').val();
@@ -166,6 +167,13 @@ $length = $db->loadObjectList();
                 url += '&length=' + length;
 
             document.location = url;
+        });
+        $('div.calctyres input[name="reset"]').click(function() {
+            $('#calctyres_marka').val('');
+            $('#calctyres_width').val('');
+            $('#calctyres_height').val('');
+            $('#calctyres_length').val('');
+            $('div.calctyres input[name="send"]').click();
         });
     });
 </script>
