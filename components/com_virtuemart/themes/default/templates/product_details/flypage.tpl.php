@@ -154,7 +154,7 @@ foreach ($mas2 as $item) {
                     &nbsp;
                     (<?php echo substr($prod->NomerKuzov, -4) ?>) 
                 </h1>	
-                <a target="_blank" href="index.php?option=com_manager&tmpl=component&product_id=<?php echo $product_id; ?>" style="float: right;margin-top: -40px;"><img src="images/print.png" /></a>
+                <a target="_blank" href="index.php?option=com_manager&view=print&tmpl=component&product_id=<?php echo $product_id; ?>" style="float: right;margin-top: -40px;"><img src="images/print.png" /></a>
                 <table class="proddetaylsinfo" cellpadding="0" cellspacing="0" border=0>
                     <thead>
                         <tr>
