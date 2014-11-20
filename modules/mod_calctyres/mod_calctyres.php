@@ -118,6 +118,17 @@ $length = $db->loadObjectList();
         margin: 8px auto;
         cursor: pointer;
     }
+    div.calctyres input[name='reset']{
+        background: -moz-linear-gradient(to bottom, #bbbbbb 30%, #999999 100%) repeat-x scroll 0 0 #ed0000;
+        background: -o-linear-gradient(to bottom, #bbbbbb 30%, #999999 100%) repeat-x scroll 0 0 #ed0000;
+        background: -webkit-linear-gradient(#bbbbbb 30%, #999999 100%) repeat-x scroll 0 0 #ed0000;
+        background: linear-gradient(to bottom, #bbbbbb 30%, #999999 100%) repeat-x scroll 0 0 #ed0000;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+        color: #fff;
+        padding: 5px 10px;
+        margin: 8px auto;
+        cursor: pointer;
+    }
     div.calctyres_row{
         padding: 10px 5px;
         background-image: -moz-linear-gradient(#eaeaea, #f0f0f0 50%, #f7f7f7);
