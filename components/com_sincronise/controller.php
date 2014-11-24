@@ -1120,13 +1120,14 @@ class SincroniseController extends JController {
 
     //загузка автомобиля
     public function loadCars($id = null, $StartFrom = 1, $Quantity = 100) {
-        if (!$id)
-            $id          = JRequest::getVar('link');
+        if (!$id) {
+            $id = JRequest::getVar('link');
+        }
         $updateforce = JRequest::getVar('updateforce');
 
         header('Content-type: text/html; charset=utf-8');
         ini_set("soap.wsdl_cache_enabled", "0");
-        //error_reporting(0);
+
         $db = JFactory::getDBO();
 
         $dop_param = array('login' => $this->user, 'password' => $this->pass);
@@ -1158,9 +1159,9 @@ class SincroniseController extends JController {
             }
         }
 
-        $string = $obj->return . '';
-        //echo $string.'<br>';
-        $xml    = new SimpleXMLElement($string);
+        $string = strval($obj->return);
+
+        $xml = new SimpleXMLElement($string);
 
         $columns = array();
         $i       = 0;
@@ -1177,13 +1178,6 @@ class SincroniseController extends JController {
             unset($obj);
 
             $images = $item->Value[$columns['ArraysOfFoto']];
-            /* if ($images) {
-              echo 'Исходные пути<br>';
-              foreach($images->row as $z)
-              {
-              echo strval($z->Value[0]).'<br>';
-              }
-              } */
 
             $obj->link           = $item->Value[$columns['Link']] . '';
             $obj->product_sku    = $item->Value[$columns['Article']] . '';
@@ -1212,34 +1206,35 @@ class SincroniseController extends JController {
             $desc                       = str_replace("'", '"', $desc);
             $st                         = strpos($desc, '<body');
             $ed                         = strpos($desc, '</body');
-            if (($st > 0) and ($ed > 0))
-                $obj->product_desc          = substr($desc, $st + 6, $ed - $st - 6);
-            else
-                $obj->product_desc          = $desc;
-            $obj->RaspolojenieRulya     = trim($item->Value[$columns['RaspolojenieRulya']] . '');
-            $obj->TipKPP                = trim($item->Value[$columns['TipKPP']] . '');
-            $obj->TipKuzova             = trim($item->Value[$columns['TipKuzova']] . '');
-            $obj->EngineSize            = trim($item->Value[$columns['EngineSize']] . '');
-            $obj->NomerKuzov            = trim($item->Value[$columns['NomerKuzova']] . '');
-            $obj->Probeg                = ($item->Value[$columns['Probeg']] . '');
-            $obj->TipTopliva            = trim($item->Value[$columns['TipTopliva']] . '');
-            $obj->CvetSalona            = trim($item->Value[$columns['CvetSalona']] . '');
-            $obj->AukcionnayaCena       = trim($item->Value[$columns['AukcionnayaCena']] . '');
-            $obj->ValutaAukcionnoiCeny  = trim($item->Value[$columns['ValutaAukcionnoiCeny']] . '');
-            $obj->product_type          = 'automobil';
-            $PerezagruzitFoto           = trim($item->Value[$columns['PerezagruzitFoto']] . '');
-            $obj->CenaProdaji           = trim($item->Value[$columns['CenaProdaji']] . '');
-            $obj->ValutaCenyProdaji     = trim($item->Value[$columns['ValutaCenyProdaji']] . '');
-            $obj->Dostavlen             = trim($item->Value[$columns['Dostavlen']] . '');
-            $obj->product_in_stock      = ($obj->Dostavlen == 'true') ? 1 : 0;
-            $obj->DneiSMomentaPokupki   = strval($item->Value[$columns['DneiSMomentaPokupki']]);
-            $obj->status                = strval($item->Value[$columns['Status']]);
-            $obj->DataDostavki          = strtotime(strval($item->Value[$columns['DataDostavki']]));
-            $obj->Sebestoimost          = floatval($item->Value[$columns['Sebestoimost']]);
-            $obj->TipSalona             = trim($item->Value[$columns['TipSalona']] . '');
-            $obj->CustomerLink          = trim($item->Value[$columns['CustomerLink']] . '');
-            $obj->DataPokupki           = trim($item->Value[$columns['DataPokupki']] . '');
-            $obj->Postavshik            = trim($item->Value[$columns['Postavshik']] . '');
+            if (($st > 0) and ($ed > 0)) {
+                $obj->product_desc = substr($desc, $st + 6, $ed - $st - 6);
+            } else {
+                $obj->product_desc = $desc;
+            }
+            $obj->RaspolojenieRulya    = trim($item->Value[$columns['RaspolojenieRulya']] . '');
+            $obj->TipKPP               = trim($item->Value[$columns['TipKPP']] . '');
+            $obj->TipKuzova            = trim($item->Value[$columns['TipKuzova']] . '');
+            $obj->EngineSize           = trim($item->Value[$columns['EngineSize']] . '');
+            $obj->NomerKuzov           = trim($item->Value[$columns['NomerKuzova']] . '');
+            $obj->Probeg               = ($item->Value[$columns['Probeg']] . '');
+            $obj->TipTopliva           = trim($item->Value[$columns['TipTopliva']] . '');
+            $obj->CvetSalona           = trim($item->Value[$columns['CvetSalona']] . '');
+            $obj->AukcionnayaCena      = trim($item->Value[$columns['AukcionnayaCena']] . '');
+            $obj->ValutaAukcionnoiCeny = trim($item->Value[$columns['ValutaAukcionnoiCeny']] . '');
+            $obj->product_type         = 'automobil';
+            $PerezagruzitFoto          = trim($item->Value[$columns['PerezagruzitFoto']] . '');
+            $obj->CenaProdaji          = trim($item->Value[$columns['CenaProdaji']] . '');
+            $obj->ValutaCenyProdaji    = trim($item->Value[$columns['ValutaCenyProdaji']] . '');
+            $obj->Dostavlen            = trim($item->Value[$columns['Dostavlen']] . '');
+            $obj->product_in_stock     = ($obj->Dostavlen == 'true') ? 1 : 0;
+            $obj->DneiSMomentaPokupki  = strval($item->Value[$columns['DneiSMomentaPokupki']]);
+            $obj->status               = strval($item->Value[$columns['Status']]);
+            $obj->DataDostavki         = strtotime(strval($item->Value[$columns['DataDostavki']]));
+            $obj->Sebestoimost         = floatval($item->Value[$columns['Sebestoimost']]);
+            $obj->TipSalona            = trim($item->Value[$columns['TipSalona']] . '');
+            $obj->CustomerLink         = trim($item->Value[$columns['CustomerLink']] . '');
+            $obj->DataPokupki          = trim($item->Value[$columns['DataPokupki']] . '');
+            $obj->Postavshik           = trim($item->Value[$columns['Postavshik']] . '');
 
             $updateimg = true;
 
@@ -1251,11 +1246,12 @@ class SincroniseController extends JController {
                 $obj->Prodan      = 0;
                 $obj->DataProdaji = 0;
             }
-//            pr($obj);
+
+            if (JRequest::getVar('debug')) {
+                pr($obj);
+            }
             $model->updateProduct($obj, $updateimg);
         }
-
-        //echo "updating auto = $count<br>";
     }
 
     //загузка масла
@@ -1626,7 +1622,7 @@ class SincroniseController extends JController {
             $obj->desc    = trim(strval($item->Value[$columns['Description']]));
             //$obj->desch   = strval($item->Value[$columns['DescriptionHTML']]);
             $obj->article = strval($item->Value[$columns['Article']]);
-            $obj->parent = strval($item->Value[$columns['Parent']]);
+            $obj->parent  = strval($item->Value[$columns['Parent']]);
 
             $images = $item->Value[$columns['ArraysOfFoto']];
             $img    = '';
