@@ -159,8 +159,8 @@ if ($ajax == 1) {
                 bottom: 0px;
             }
             #btnupdown div{
-                width: 48px;
-                height: 48px;
+                width: 80px;
+                height: 80px;
                 cursor: pointer;
             }
             #btndown{

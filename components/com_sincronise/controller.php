@@ -94,6 +94,12 @@ class SincroniseController extends JController {
 
                         break;
                     }
+                case 'loadRezinaCategories'://загрузить весь список
+                    {
+                        $this->loadRezinaCategories();
+
+                        break;
+                    }
                 case 'loadAccumulyatory'://загрузить весь список
                     {
                         $this->loadAccumulyatory();
@@ -1577,6 +1583,65 @@ class SincroniseController extends JController {
                 pr($obj);
             }
             $model->updateProduct($obj);
+        }
+    }
+
+    public function loadRezinaCategories($id = null) {
+        if (!$id) {
+            $id = JRequest::getVar('link');
+        }
+
+        header('Content-type: text/html; charset=utf-8');
+        ini_set("soap.wsdl_cache_enabled", "0");
+        $db = JFactory::getDBO();
+
+        $dop_param = array('login' => $this->user, 'password' => $this->pass);
+        $client    = new SoapClient($this->url, $dop_param);
+        $param     = array('ID' => $id);
+        $obj       = $client->MK_GetListOfRezinaCategories($param);
+
+        $string = strval($obj->return);
+
+        $xml = new SimpleXMLElement($string);
+
+        $columns = array();
+        $i       = 0;
+        foreach ($xml->column as $k => $item) {
+            $columns[strval($item->Name)] = $i;
+            $i++;
+        }
+
+        if (JRequest::getVar('debug')) {
+            pr($columns);
+        }
+        $model     = new SincroniseModelSincronise;
+        $model->db = $db;
+
+        foreach ($xml->row as $k => $item) {
+            unset($obj);
+            $obj          = new stdClass();
+            $obj->link    = strval($item->Value[$columns['Link']]);
+            $obj->name    = strval($item->Value[$columns['Name']]);
+            $obj->code    = strval($item->Value[$columns['Code']]);
+            $obj->desc    = trim(strval($item->Value[$columns['Description']]));
+            //$obj->desch   = strval($item->Value[$columns['DescriptionHTML']]);
+            $obj->article = strval($item->Value[$columns['Article']]);
+            $obj->parent = strval($item->Value[$columns['Parent']]);
+
+            $images = $item->Value[$columns['ArraysOfFoto']];
+            $img    = '';
+            if ($images->row) {
+                foreach ($images->row as $z) {
+                    $img     = str_replace('\\', '/', strval($z->Value[$columns['Link']]));
+                    $image[] = 'http://image.yamato.kg/' . basename($img);
+                }
+            }
+            $obj->fotos = $image;
+
+            $obj->proizvoditel     = strval($item->Value[$columns['Proizvoditel']]);
+            $obj->proizvoditelLink = strval($item->Value[$columns['ProizvoditelLink']]);
+
+            pr($obj);
         }
     }
 

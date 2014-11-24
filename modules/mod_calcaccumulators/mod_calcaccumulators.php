@@ -7,34 +7,30 @@ $db = & JFactory::getDBO();
 
 $query  = "SELECT DISTINCT marka "
         . "FROM #__vm_product "
-        . "WHERE product_type = 'rezina' AND marka <> 'NONE' "
+        . "WHERE product_type = 'accumulyatory' AND marka <> 'NONE' "
         . "ORDER BY marka";
 $db->setQuery($query);
 $markas = $db->loadObjectList();
 
-$query = "SELECT DISTINCT CONVERT(product_width, SIGNED) width "
-        . "FROM #__vm_product "
-        . "WHERE product_type = 'rezina' AND product_width > 0 "
-        . "ORDER BY product_width";
-$db->setQuery($query);
-$width = $db->loadObjectList();
+$polar = array(
+    'right' => 'Правая',
+    'left'  => 'Левая',
+);
 
-$query  = "SELECT DISTINCT CONVERT(product_height, SIGNED) height "
-        . "FROM #__vm_product "
-        . "WHERE product_type = 'rezina' AND product_height > 0 "
-        . "ORDER BY product_height";
-$db->setQuery($query);
-$height = $db->loadObjectList();
+$clema = array(
+    'thick' => 'Толстая',
+    'thin'  => 'Тонкая',
+);
 
-$query  = "SELECT DISTINCT CONVERT(product_length, SIGNED) length "
+$query = "SELECT DISTINCT CONVERT(Power, SIGNED) Power "
         . "FROM #__vm_product "
-        . "WHERE product_type = 'rezina' AND product_length > 0 "
-        . "ORDER BY product_length";
+        . "WHERE product_type = 'accumulyatory' AND Power > 0 "
+        . "ORDER BY Power";
 $db->setQuery($query);
-$length = $db->loadObjectList();
+$power = $db->loadObjectList();
 ?>
 <div class="calctyres">
-    <h2>Подбор шин</h2>
+    <h2>Подбор аккумуляторов</h2>
     <div class="calctyres_row">
         Производитель<br />
         <select id="calctyres_marka">
@@ -49,39 +45,39 @@ $length = $db->loadObjectList();
     </div>
     <div class="calctyres_row calctyres_sizes">
         <div class="calctyres_col">
-            Ширина<br />
-            <select id="calctyres_width">
+            Клемы<br />
+            <select id="calctyres_clema">
                 <option></option>
                 <?php
-                foreach ($width as $item) {
-                    $sel = (JRequest::getVar('width') == $item->width) ? 'selected' : '';
-                    echo '<option ' . $sel . ' value="' . $item->width . '">' . $item->width . '</option>';
+                foreach ($clema as $key => $value) {
+                    $sel = (JRequest::getVar('clema') == $key) ? 'selected' : '';
+                    echo '<option ' . $sel . ' value="' . $key . '">' . $value . '</option>';
                 }
                 ?>
             </select>
         </div>
-        &nbsp;/&nbsp;
+        &nbsp;&nbsp;
         <div class="calctyres_col">
-            Профиль<br />
-            <select id="calctyres_height">
+            Полярность<br />
+            <select id="calctyres_polar">
                 <option></option>
                 <?php
-                foreach ($height as $item) {
-                    $sel = (JRequest::getVar('height') == $item->height) ? 'selected' : '';
-                    echo '<option ' . $sel . ' value="' . $item->height . '">' . $item->height . '</option>';
+                foreach ($polar as $key => $value) {
+                    $sel = (JRequest::getVar('polar') == $key) ? 'selected' : '';
+                    echo '<option ' . $sel . ' value="' . $key . '">' . $value . '</option>';
                 }
                 ?>
             </select>
         </div>
-        &nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;
         <div class="calctyres_col">
-            Диаметр<br />
-            <select id="calctyres_length">
+            Мощность<br />
+            <select id="calctyres_power">
                 <option></option>
                 <?php
-                foreach ($length as $item) {
-                    $sel = (JRequest::getVar('length') == $item->length) ? 'selected' : '';
-                    echo '<option ' . $sel . ' value="' . $item->length . '">R' . $item->length . '</option>';
+                foreach ($power as $item) {
+                    $sel = (JRequest::getVar('length') == $item->Power) ? 'selected' : '';
+                    echo '<option ' . $sel . ' value="' . $item->Power . '">R' . $item->length . '</option>';
                 }
                 ?>
             </select>
@@ -94,11 +90,11 @@ $length = $db->loadObjectList();
     div.calctyres{
         background: #ebebeb;
         border-radius: 5px;
-        width: 210px;
+        width: 220px;
         padding: 5px;
         text-align: center;
         float: left;
-        margin-right: 30px;
+        margin-right: 25px;
         margin-top: 3px;
     }
     div.calctyres_col{
@@ -144,7 +140,7 @@ $length = $db->loadObjectList();
         width: 90%;
     }
     div.calctyres_sizes select{
-        width: 100%;
+        width: 52px;
     }
     div.calctyres select{
         border: solid 1px #999999;
@@ -163,28 +159,28 @@ $length = $db->loadObjectList();
     jQuery(document).ready(function($) {
         $('div.calctyres input[name="send"]').click(function() {
             var marka = $('#calctyres_marka').val();
-            var width = $('#calctyres_width').val();
-            var height = $('#calctyres_height').val();
-            var length = $('#calctyres_length').val();
+            var clema = $('#calctyres_clema').val();
+            var polar = $('#calctyres_polar').val();
+            var power = $('#calctyres_power').val();
 
             var url = 'index.php?option=com_virtuemart&Itemid=<?php echo JRequest::getInt('Itemid'); ?>';
 
             if (marka)
                 url += '&marka=' + marka;
-            if (width)
-                url += '&width=' + width;
-            if (height)
-                url += '&height=' + height;
-            if (length)
-                url += '&length=' + length;
+            if (clema)
+                url += '&clema=' + clema;
+            if (polar)
+                url += '&polar=' + polar;
+            if (power)
+                url += '&power=' + power;
 
             document.location = url;
         });
         $('div.calctyres input[name="reset"]').click(function() {
             $('#calctyres_marka').val('');
-            $('#calctyres_width').val('');
-            $('#calctyres_height').val('');
-            $('#calctyres_length').val('');
+            $('#calctyres_clema').val('');
+            $('#calctyres_polar').val('');
+            $('#calctyres_power').val('');
             $('div.calctyres input[name="send"]').click();
         });
     });

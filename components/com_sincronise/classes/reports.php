@@ -44,16 +44,16 @@ class Report {
     }
 
     public function stop($result_data = null) {
-        $result_data = '';//str_replace("'", "\\'", $result_data);
+        $result_data      = ''; //str_replace("'", "\\'", $result_data);
         $finish_date_unix = time();
         $this->mk_finish  = microtime(true);
 
         $work_time = $this->mk_finish - $this->mk_start;
 
         $sql = "UPDATE `#__sincronise_report`
-				SET `finish_date` = NOW(), `status` = 1, `finish_date_unix` = $finish_date_unix, 
-				`result_data` = '$result_data', `work_time` = $work_time
-				WHERE `id` = " . $this->reportId;
+                SET `finish_date` = NOW(), `status` = 1, `finish_date_unix` = $finish_date_unix, 
+                `result_data` = '$result_data', `work_time` = $work_time
+                WHERE `id` = " . $this->reportId;
         $this->db->setQuery($sql);
         $this->db->query();
     }

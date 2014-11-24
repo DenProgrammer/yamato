@@ -27,6 +27,13 @@ if (JRequest::getVar('Itemid') == 29) {
     echo JModuleHelper::renderModule($mods);
     $percent = 74;
 }
+if (JRequest::getVar('Itemid') == 27) {
+    jimport('joomla.application.module.helper');
+    $mods = JModuleHelper::getModule('calcaccumulators');
+
+    echo JModuleHelper::renderModule($mods);
+    $percent = 74;
+}
 
 foreach ($products as $product) {
 
