@@ -59,8 +59,8 @@ defined('_JEXEC') or die('Restricted access');
             bottom: 0px;
         }
         #btnupdown div{
-            width: 48px;
-            height: 48px;
+            width: 72px;
+            height: 72px;
             cursor: pointer;
         }
         #btndown{
