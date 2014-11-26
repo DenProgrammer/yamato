@@ -367,6 +367,15 @@ if ($_GET['height']) {
 if ($_GET['length']) {
     $q .= ' AND `#__{vm}_product`.`product_length`=\'' . intval($_GET['length']) . '\'';
 }
+if (JRequest::getVar('clema')) {
+    $q .= ' AND `#__{vm}_product`.`Clema`=\'' . JRequest::getVar('clema') . '\'';
+}
+if (JRequest::getVar('polar')) {
+    $q .= ' AND `#__{vm}_product`.`Polar`=\'' . JRequest::getVar('polar') . '\'';
+}
+if (JRequest::getVar('power')) {
+    $q .= ' AND `#__{vm}_product`.`Power`=\'' . intval(JRequest::getVar('power')) . '\'';
+}
 if ($_GET['model']) {
     $modelarr = explode(';', $_GET['model']);
     $modelstr = $sep      = '';

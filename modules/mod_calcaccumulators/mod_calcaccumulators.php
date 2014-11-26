@@ -7,24 +7,28 @@ $db = & JFactory::getDBO();
 
 $query  = "SELECT DISTINCT marka "
         . "FROM #__vm_product "
-        . "WHERE product_type = 'accumulyatory' AND marka <> 'NONE' "
+        . "WHERE product_publish = 'Y' AND product_type = 'accumulyatory' AND marka <> 'NONE' "
         . "ORDER BY marka";
 $db->setQuery($query);
 $markas = $db->loadObjectList();
 
-$polar = array(
-    'right' => 'Правая',
-    'left'  => 'Левая',
-);
+$query = "SELECT DISTINCT polar "
+        . "FROM #__vm_product "
+        . "WHERE product_publish = 'Y' AND product_type = 'accumulyatory' AND polar IS NOT NULL "
+        . "ORDER BY polar";
+$db->setQuery($query);
+$polar = $db->loadObjectList();
 
-$clema = array(
-    'thick' => 'Толстая',
-    'thin'  => 'Тонкая',
-);
+$query = "SELECT DISTINCT clema "
+        . "FROM #__vm_product "
+        . "WHERE product_publish = 'Y' AND product_type = 'accumulyatory' AND clema IS NOT NULL "
+        . "ORDER BY clema";
+$db->setQuery($query);
+$clema = $db->loadObjectList();
 
 $query = "SELECT DISTINCT CONVERT(Power, SIGNED) Power "
         . "FROM #__vm_product "
-        . "WHERE product_type = 'accumulyatory' AND Power > 0 "
+        . "WHERE product_publish = 'Y' AND product_type = 'accumulyatory' AND Power > 0 "
         . "ORDER BY Power";
 $db->setQuery($query);
 $power = $db->loadObjectList();
@@ -49,9 +53,9 @@ $power = $db->loadObjectList();
             <select id="calctyres_clema">
                 <option></option>
                 <?php
-                foreach ($clema as $key => $value) {
-                    $sel = (JRequest::getVar('clema') == $key) ? 'selected' : '';
-                    echo '<option ' . $sel . ' value="' . $key . '">' . $value . '</option>';
+                foreach ($clema as $item) {
+                    $sel = (JRequest::getVar('clema') == $item->clema) ? 'selected' : '';
+                    echo '<option ' . $sel . ' value="' . $item->clema . '">' . $item->clema . '</option>';
                 }
                 ?>
             </select>
@@ -62,22 +66,22 @@ $power = $db->loadObjectList();
             <select id="calctyres_polar">
                 <option></option>
                 <?php
-                foreach ($polar as $key => $value) {
-                    $sel = (JRequest::getVar('polar') == $key) ? 'selected' : '';
-                    echo '<option ' . $sel . ' value="' . $key . '">' . $value . '</option>';
+                foreach ($polar as $item) {
+                    $sel = (JRequest::getVar('polar') == $item->polar) ? 'selected' : '';
+                    echo '<option ' . $sel . ' value="' . $item->polar . '">' . $item->polar . '</option>';
                 }
                 ?>
             </select>
         </div>
         &nbsp;&nbsp;
         <div class="calctyres_col">
-            Мощность<br />
+            Ёмкость<br />
             <select id="calctyres_power">
                 <option></option>
                 <?php
                 foreach ($power as $item) {
-                    $sel = (JRequest::getVar('length') == $item->Power) ? 'selected' : '';
-                    echo '<option ' . $sel . ' value="' . $item->Power . '">R' . $item->length . '</option>';
+                    $sel = (JRequest::getVar('power') == $item->Power) ? 'selected' : '';
+                    echo '<option ' . $sel . ' value="' . $item->Power . '">' . $item->Power . '</option>';
                 }
                 ?>
             </select>

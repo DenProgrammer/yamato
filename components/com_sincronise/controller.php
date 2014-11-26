@@ -1077,9 +1077,9 @@ class SincroniseController extends JController {
             $etap_dostavki = trim($rss->row[$i]->Value[6]);
 
             $sql = "INSERT INTO `#__cagents_avto` (
-								`cdate`, `cagent_link`, `avto_link`, `etap_dostavki`
-								) VALUES (
-								'$data', '$cagent_link', '$avto_link', '$etap_dostavki')";
+                    `cdate`, `cagent_link`, `avto_link`, `etap_dostavki`
+                    ) VALUES (
+                    '$data', '$cagent_link', '$avto_link', '$etap_dostavki')";
             $db->setQuery($sql);
             $db->query();
         }
@@ -1357,6 +1357,10 @@ class SincroniseController extends JController {
             $obj->Razmer               = strval($item->Value[$columns['Razmer']]);
             $obj->group_uom            = 'л';
             $obj->group_article        = strval($item->Value[$columns['Article']]);
+            $obj->Properties           = strval($item->Value[$columns['Properties']]);
+            if ($obj->Properties) {
+                $obj->Properties = json_decode($obj->Properties);
+            }
 
             $updateimg = true;
 
@@ -1369,9 +1373,9 @@ class SincroniseController extends JController {
 
     //загузка аккамуляторов
     public function loadAccumulyatory($id = null) {
-        if (!$id)
-            $id          = JRequest::getVar('link');
-        $updateforce = JRequest::getVar('updateforce');
+        if (!$id) {
+            $id = JRequest::getVar('link');
+        }
 
         header('Content-type: text/html; charset=utf-8');
         ini_set("soap.wsdl_cache_enabled", "0");
@@ -1394,8 +1398,15 @@ class SincroniseController extends JController {
             $db->query();
         }
         $string = $obj->return . '';
-        //echo $string;
+//        echo $string;
         $xml    = new SimpleXMLElement($string);
+
+        $columns = array();
+        $i       = 0;
+        foreach ($xml->column as $k => $item) {
+            $columns[strval($item->Name)] = $i;
+            $i++;
+        }
 
         $model     = new SincroniseModelSincronise;
         $model->db = $db;
@@ -1450,7 +1461,11 @@ class SincroniseController extends JController {
             $obj->product_type         = 'accumulyatory';
             $obj->Prodan               = 0;
             $obj->DataProdaji          = 0;
-            $PerezagruzitFoto          = trim($item->Value[8] . '');
+            $obj->Properties           = strval($item->Value[$columns['Properties']]);
+            if ($obj->Properties) {
+                $obj->Properties = json_decode('{' . $obj->Properties . '}', true);
+                $obj->marka      = $obj->Properties['Производитель'];
+            }
 
             $updateimg = true;
 
@@ -1489,7 +1504,8 @@ class SincroniseController extends JController {
             $db->setQuery($sql);
             $db->query();
         }
-        $string = $obj->return . '';
+        $string = strval($obj->return);
+        echo $string;
 
         $xml = new SimpleXMLElement($string);
 
@@ -1574,6 +1590,7 @@ class SincroniseController extends JController {
             $obj->product_type         = 'rezina';
             $obj->Prodan               = 0;
             $obj->DataProdaji          = 0;
+            $obj->Properties           = strval($item->Value[$columns['Properties']]);
 
             if (JRequest::getVar('debug')) {
                 pr($obj);

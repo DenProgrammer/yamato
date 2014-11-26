@@ -124,6 +124,7 @@ class SincroniseModelSincronise extends JModel {
         $product_width         = (isset($p_obj->product_width)) ? $p_obj->product_width : 0;
         $product_height        = (isset($p_obj->product_height)) ? $p_obj->product_height : 0;
         $product_length        = (isset($p_obj->product_length)) ? $p_obj->product_length : 0;
+        $Properties            = $p_obj->Properties;
 
         if (!$product_model) {
             $product_model = 'NONE';
@@ -225,6 +226,7 @@ class SincroniseModelSincronise extends JModel {
             }
         }
 
+        $dopsql = $this->prepareProperties($Properties);
         if ($p_obj->product_weight_uom) {
             $dopsql .= ' ,`product_weight_uom` = \'' . $p_obj->product_weight_uom . '\'';
         }
@@ -316,6 +318,22 @@ class SincroniseModelSincronise extends JModel {
         }
 
         return $product_id;
+    }
+
+    public function prepareProperties($properties) {
+        $sql = '';
+
+        if (isset($properties['Полярность'])) {
+            $sql .= ' ,`polar` = \'' . str_replace(array('+', '-', ' '), '', $properties['Полярность']) . '\'';
+        }
+        if (isset($properties['Тип клемм'])) {
+            $sql .= ' ,`clema` = \'' . $properties['Тип клемм'] . '\'';
+        }
+        if (isset($properties['Ёмкость'])) {
+            $sql .= ' ,`power` = \'' . $properties['Ёмкость'] . '\'';
+        }
+
+        return $sql;
     }
 
     public function updateManufacturer($obj) {
