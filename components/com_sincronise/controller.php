@@ -1505,7 +1505,7 @@ class SincroniseController extends JController {
             $db->query();
         }
         $string = strval($obj->return);
-        echo $string;
+//        echo $string;
 
         $xml = new SimpleXMLElement($string);
 
@@ -1529,7 +1529,7 @@ class SincroniseController extends JController {
 
             $obj->link           = $item->Value[$columns['Link']] . '';
             $obj->product_sku    = $item->Value[$columns['Code']] . '';
-            $obj->group_article  = $item->Value[$columns['Article']] . '';
+            $obj->group_article  = ($item->Value[$columns['Article']]) ? strval($item->Value[$columns['Article']]) : null;
             $obj->product_s_desc = $item->Value[$columns['Description']] . '';
 
             $images = $item->Value[6];

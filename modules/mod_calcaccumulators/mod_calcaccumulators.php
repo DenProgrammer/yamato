@@ -167,7 +167,7 @@ $power = $db->loadObjectList();
             var polar = $('#calctyres_polar').val();
             var power = $('#calctyres_power').val();
 
-            var url = 'index.php?option=com_virtuemart&Itemid=<?php echo JRequest::getInt('Itemid'); ?>';
+            var url = 'index.php?option=com_virtuemart&page=shop.browse&category_id=<?php echo JRequest::getInt('category_id'); ?>&Itemid=<?php echo JRequest::getInt('Itemid'); ?>';
 
             if (marka)
                 url += '&marka=' + marka;

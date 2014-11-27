@@ -25,4 +25,4 @@ if( $this->get_cfg( 'showlatest', 1 )) {
 <div class="vmRecent" style="padding: 10px; text-align: center;">
 	<?php echo $paypalLogo; ?>
 </div>
-<?php endif; ?>
+<?php endif;

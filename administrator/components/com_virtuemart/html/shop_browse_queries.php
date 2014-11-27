@@ -408,7 +408,7 @@ if ($_GET['data_out'] > 0) {
 }
 
 $count .= $q;
-$q .= "\n GROUP BY `#__{vm}_product`.`group_article` ";
+//$q .= "\n GROUP BY `#__{vm}_product`.`group_article` ";
 
 $q .= "\n ORDER BY $orderbyField $DescOrderBy";
 
