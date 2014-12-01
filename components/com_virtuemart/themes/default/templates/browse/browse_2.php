@@ -27,7 +27,7 @@ if ($prod->product_discount_id > 0) {
             </tr>
             <tr>
                 <td align="left">
-                    <?php if (!$product_price) {?>
+                    <?php if ($product_price) {?>
                     <span class="product_price_cont" ><?php echo $product_price ?></span>
                     <?php } else { ?>
                     <span class="product_price_cont" style="font-size: 10px;color:#aa0101;" >Не отображается <br />(нет цены)</span>
