@@ -7,35 +7,35 @@ $db = & JFactory::getDBO();
 
 $query  = "SELECT DISTINCT marka "
         . "FROM #__vm_product "
-        . "WHERE product_type = 'rezina' AND marka <> 'NONE' "
+        . "WHERE product_type = 'rezina' AND marka <> 'NONE' AND product_publish = 'Y' "
         . "ORDER BY marka";
 $db->setQuery($query);
 $markas = $db->loadObjectList();
 
 $query  = "SELECT DISTINCT sezon "
         . "FROM #__vm_product "
-        . "WHERE product_type = 'rezina' AND sezon IS NOT NULL "
+        . "WHERE product_type = 'rezina' AND sezon IS NOT NULL AND product_publish = 'Y' "
         . "ORDER BY sezon";
 $db->setQuery($query);
 $sezons = $db->loadObjectList();
 
 $query = "SELECT DISTINCT CONVERT(product_width, SIGNED) width "
         . "FROM #__vm_product "
-        . "WHERE product_type = 'rezina' AND product_width > 0 "
+        . "WHERE product_type = 'rezina' AND product_width > 0 AND product_publish = 'Y' "
         . "ORDER BY product_width";
 $db->setQuery($query);
 $width = $db->loadObjectList();
 
 $query  = "SELECT DISTINCT CONVERT(product_height, SIGNED) height "
         . "FROM #__vm_product "
-        . "WHERE product_type = 'rezina' AND product_height > 0 "
+        . "WHERE product_type = 'rezina' AND product_height > 0 AND product_publish = 'Y' "
         . "ORDER BY product_height";
 $db->setQuery($query);
 $height = $db->loadObjectList();
 
 $query  = "SELECT DISTINCT CONVERT(product_length, SIGNED) length "
         . "FROM #__vm_product "
-        . "WHERE product_type = 'rezina' AND product_length > 0 "
+        . "WHERE product_type = 'rezina' AND product_length > 0 AND product_publish = 'Y' "
         . "ORDER BY product_length";
 $db->setQuery($query);
 $length = $db->loadObjectList();
