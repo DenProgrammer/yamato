@@ -332,14 +332,13 @@ if (!empty($product_type_id)) {
 $list  = "SELECT DISTINCT $fieldnames FROM ($table_names) ";
 $count = "SELECT $count_name FROM ($table_names) ";
 
-if ($perm->is_registered_customer($auth['user_id'])) {
+//if ($perm->is_registered_customer($auth['user_id'])) {
     $where_clause[] = "(`#__{vm}_product`.`product_id`=`#__{vm}_product_price`.`product_id` OR `#__{vm}_product_price`.`product_id` IS NULL) ";
     $join_array[]   = 'LEFT JOIN `#__{vm}_shopper_vendor_xref` ON (`#__{vm}_shopper_vendor_xref`.`user_id` =' . $auth['user_id'] . ' AND `#__{vm}_shopper_vendor_xref`.`shopper_group_id`=`#__{vm}_shopper_group`.`shopper_group_id`)';
-} else {
-    //$where_clause[] = "((`#__{vm}_product`.`product_id`=`#__{vm}_product_price`.`product_id` AND `#__{vm}_shopper_group`.`shopper_group_id`=`#__{vm}_product_price`.`shopper_group_id`) OR `#__{vm}_product_price`.`product_id` IS NULL) ";
-    $where_clause[] = "(`#__{vm}_product`.`product_id`=`#__{vm}_product_price`.`product_id` AND `#__{vm}_shopper_group`.`shopper_group_id`=`#__{vm}_product_price`.`shopper_group_id`) ";
-    $where_clause[] = '`#__{vm}_shopper_group`.`default` = 1';
-}
+//} else {
+//    $where_clause[] = "(`#__{vm}_product`.`product_id`=`#__{vm}_product_price`.`product_id` AND `#__{vm}_shopper_group`.`shopper_group_id`=`#__{vm}_product_price`.`shopper_group_id`) ";
+//    $where_clause[] = '`#__{vm}_shopper_group`.`default` = 1';
+//}
 if (empty($keyword)) {
     // when someone is searching, we also show child products (product_parent_id != 0), but that's not the case here
     $where_clause[] = "`product_parent_id`=0 ";
