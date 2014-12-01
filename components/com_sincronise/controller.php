@@ -1591,6 +1591,10 @@ class SincroniseController extends JController {
             $obj->Prodan               = 0;
             $obj->DataProdaji          = 0;
             $obj->Properties           = strval($item->Value[$columns['Properties']]);
+            if ($obj->Properties) {
+                $obj->Properties = json_decode('{' . $obj->Properties . '}', true);
+                $obj->sezon      = $obj->Properties['Сезонность'];
+            }
 
             if (JRequest::getVar('debug')) {
                 pr($obj);

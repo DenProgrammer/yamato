@@ -375,6 +375,9 @@ if (JRequest::getVar('polar')) {
 if (JRequest::getVar('power')) {
     $q .= ' AND `#__{vm}_product`.`Power`=\'' . intval(JRequest::getVar('power')) . '\'';
 }
+if (JRequest::getVar('sezon')) {
+    $q .= ' AND `#__{vm}_product`.`sezon`=\'' . JRequest::getVar('sezon') . '\'';
+}
 if ($_GET['model']) {
     $modelarr = explode(';', $_GET['model']);
     $modelstr = $sep      = '';

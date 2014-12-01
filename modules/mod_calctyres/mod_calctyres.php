@@ -12,6 +12,13 @@ $query  = "SELECT DISTINCT marka "
 $db->setQuery($query);
 $markas = $db->loadObjectList();
 
+$query  = "SELECT DISTINCT sezon "
+        . "FROM #__vm_product "
+        . "WHERE product_type = 'rezina' AND sezon IS NOT NULL "
+        . "ORDER BY sezon";
+$db->setQuery($query);
+$sezons = $db->loadObjectList();
+
 $query = "SELECT DISTINCT CONVERT(product_width, SIGNED) width "
         . "FROM #__vm_product "
         . "WHERE product_type = 'rezina' AND product_width > 0 "
@@ -43,6 +50,18 @@ $length = $db->loadObjectList();
             foreach ($markas as $item) {
                 $sel = (JRequest::getVar('marka') == $item->marka) ? 'selected' : '';
                 echo '<option ' . $sel . ' value="' . $item->marka . '">' . $item->marka . '</option>';
+            }
+            ?>
+        </select>
+    </div>
+    <div class="calctyres_row">
+        Сезон<br />
+        <select id="calctyres_sezon">
+            <option></option>
+            <?php
+            foreach ($sezons as $item) {
+                $sel = (JRequest::getVar('sezon') == $item->sezon) ? 'selected' : '';
+                echo '<option ' . $sel . ' value="' . $item->sezon . '">' . $item->sezon . '</option>';
             }
             ?>
         </select>
@@ -140,7 +159,7 @@ $length = $db->loadObjectList();
         border-top: 1px solid #b6b6b6;
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
     }
-    #calctyres_marka{
+    #calctyres_marka, #calctyres_sezon{
         width: 90%;
     }
     div.calctyres_sizes select{
@@ -166,6 +185,7 @@ $length = $db->loadObjectList();
             var width = $('#calctyres_width').val();
             var height = $('#calctyres_height').val();
             var length = $('#calctyres_length').val();
+            var sezon = $('#calctyres_sezon').val();
 
             var url = 'index.php?option=com_virtuemart&page=shop.browse&category_id=<?php echo JRequest::getInt('category_id'); ?>&Itemid=<?php echo JRequest::getInt('Itemid'); ?>';
 
@@ -177,6 +197,8 @@ $length = $db->loadObjectList();
                 url += '&height=' + height;
             if (length)
                 url += '&length=' + length;
+            if (sezon)
+                url += '&sezon=' + sezon;
 
             document.location = url;
         });
@@ -185,6 +207,7 @@ $length = $db->loadObjectList();
             $('#calctyres_width').val('');
             $('#calctyres_height').val('');
             $('#calctyres_length').val('');
+            $('#calctyres_sezon').val('');
             $('div.calctyres input[name="send"]').click();
         });
     });

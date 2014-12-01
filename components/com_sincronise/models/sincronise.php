@@ -124,6 +124,7 @@ class SincroniseModelSincronise extends JModel {
         $product_width         = (isset($p_obj->product_width)) ? $p_obj->product_width : 0;
         $product_height        = (isset($p_obj->product_height)) ? $p_obj->product_height : 0;
         $product_length        = (isset($p_obj->product_length)) ? $p_obj->product_length : 0;
+        $sezon                 = (isset($p_obj->sezon)) ? $p_obj->sezon : null;
         $Properties            = $p_obj->Properties;
 
         if (!$product_model) {
@@ -242,7 +243,7 @@ class SincroniseModelSincronise extends JModel {
                 `TipPoSostavu` = '$TipPoSostavu', `TipPoNaznacheniyu` = '$TipPoNaznacheniyu', `Razmer` = '$Razmer',
                 `group_article` = '$group_article', `DataDostavki` = '$DataDostavki', `DataPokupki` = '$DataPokupki',
                 `product_width` = '$product_width', `product_height` = '$product_height', `product_length` = '$product_length',
-                `Postavshik` = '$Postavshik'
+                `Postavshik` = '$Postavshik', `sezon` = '$sezon'
                 $dopsql
                 WHERE `product_id`=$product_id";
         $db->setQuery($sql);
