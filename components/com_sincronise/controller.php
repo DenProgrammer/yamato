@@ -1539,10 +1539,13 @@ class SincroniseController extends JController {
                     $img     = str_replace('\\', '/', strval($z->Value[$columns['Link']]));
                     $image[] = 'http://image.yamato.kg/' . basename($img);
                 }
-            $obj->product_image         = $image;
-            $obj->product_in_stock      = $item->Value[$columns['Kolichestvo']] . '';
-            $obj->product_name          = trim($item->Value[$columns['Name']] . '');
-            $obj->product_price         = $item->Value[$columns['Cena']] . '';
+            $obj->product_image    = $image;
+            $obj->product_in_stock = $item->Value[$columns['Kolichestvo']] . '';
+            $obj->product_name     = trim($item->Value[$columns['Name']] . '');
+            $obj->product_price    = $item->Value[$columns['Cena']] . '';
+            if (!$obj->product_price > 0) {
+                $obj->product_price = $item->Value[$columns['OptovayaCenaUSD']] . '';
+            }
             $obj->product_currency_link = '';
             $obj->product_currency      = $item->Value[$columns['Valyuta']] . '';
 

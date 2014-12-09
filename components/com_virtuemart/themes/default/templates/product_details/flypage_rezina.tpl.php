@@ -81,7 +81,7 @@ $group_url = 'index.php?page=shop.product_details&option=com_virtuemart&flypage=
     });
 </script>
 <div class="brdcrambs" >
-    <a href="index.php">Каталог</a> / <a href="index.php?option=com_virtuemart&page=shop.browse&category_id=<?php echo $category_id; ?>&Itemid=3"><?php echo $prod->category_name; ?></a>
+    <a href="index.php">Каталог</a> / <a href="index.php?option=com_virtuemart&page=shop.browse&category_id=<?php echo $category_id; ?>&Itemid=29"><?php echo $prod->category_name; ?></a>
 </div>
 <table border="0" style="width: 100%;">
     <tbody>

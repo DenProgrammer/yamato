@@ -16,9 +16,9 @@ mm_showMyFileName(__FILE__);
 <?php echo $orderby_form // The sort-by, order-byF form PLUS top page navigation  ?>
 
 <?php
-$data = array(); // Holds the rows of products
-$i   = 1;
-$row = 0; // Counters
+$data    = array(); // Holds the rows of products
+$i       = 1;
+$row     = 0; // Counters
 $percent = 100;
 if (JRequest::getVar('Itemid') == 29) {
     jimport('joomla.application.module.helper');
@@ -53,9 +53,13 @@ foreach ($products as $product) {
     }
     $i++;
 }
+
+if (count($products) == 0) {
+    echo JText::_('PRODUCTS_NOT_FOUND');
+}
 // Creates a new HTML_Table object that will help us
 // to build a table holding all the products
-$table = new HTML_Table('width="'.$percent.'%"');
+$table = new HTML_Table('width="' . $percent . '%"');
 
 // Loop through each row and build the table
 foreach ($data as $key => $value) {
