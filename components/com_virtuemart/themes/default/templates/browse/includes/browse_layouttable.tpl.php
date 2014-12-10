@@ -3,11 +3,14 @@ if (!defined('_VALID_MOS') && !defined('_JEXEC'))
     die('Direct Access to ' . basename(__FILE__) . ' is not allowed.');
 mm_showMyFileName(__FILE__);
 ?>
-<div class="moduletable-mainpage moduletable-mainpagetop">
-    <h3>
-        <?php echo $category_name; ?>
-        <?php echo $browsepage_footer ?>
-    </h3>
+<div class="brdcrambs" >
+    <a href="index.php">Каталог</a> / 
+    <a href="index.php?option=com_virtuemart&page=shop.browse&category_id=<?php echo $category_id; ?>&Itemid=<?php echo JRequest::getInt('Itemid'); ?>"><?php echo $category_name; ?></a>
+    <?php
+    if (isset($referer['model']) && isset($referer['cm']) && isset($referer['rul'])) {
+        echo "<a style='float:right;' href='$ref'>Вернутся к результатам поиска</a>";
+    }
+    ?>
 </div>
 
 <?php echo $buttons_header // The PDF, Email and Print buttons ?>
