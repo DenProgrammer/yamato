@@ -124,7 +124,10 @@ class SincroniseModelSincronise extends JModel {
         $product_width         = (isset($p_obj->product_width)) ? $p_obj->product_width : 0;
         $product_height        = (isset($p_obj->product_height)) ? $p_obj->product_height : 0;
         $product_length        = (isset($p_obj->product_length)) ? $p_obj->product_length : 0;
+        $price_opt_usd         = (isset($p_obj->price_opt_usd)) ? $p_obj->price_opt_usd : 0;
+        $price_opt_kgs         = (isset($p_obj->$price_opt_kgs)) ? $p_obj->$price_opt_kgs : 0;
         $sezon                 = (isset($p_obj->sezon)) ? $p_obj->sezon : null;
+        $type_product          = (isset($p_obj->type_product)) ? $p_obj->type_product : null;
         $Properties            = $p_obj->Properties;
 
         if (!$product_model) {
@@ -243,7 +246,8 @@ class SincroniseModelSincronise extends JModel {
                 `TipPoSostavu` = '$TipPoSostavu', `TipPoNaznacheniyu` = '$TipPoNaznacheniyu', `Razmer` = '$Razmer',
                 `group_article` = '$group_article', `DataDostavki` = '$DataDostavki', `DataPokupki` = '$DataPokupki',
                 `product_width` = '$product_width', `product_height` = '$product_height', `product_length` = '$product_length',
-                `Postavshik` = '$Postavshik', `sezon` = '$sezon'
+                `Postavshik` = '$Postavshik', `sezon` = '$sezon', `price_opt_usd` = '$price_opt_usd', 
+                `price_opt_kgs` = '$price_opt_kgs', `type_product` = '$type_product'
                 $dopsql
                 WHERE `product_id`=$product_id";
         $db->setQuery($sql);

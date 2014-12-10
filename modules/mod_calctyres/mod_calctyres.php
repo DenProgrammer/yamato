@@ -19,6 +19,13 @@ $query  = "SELECT DISTINCT sezon "
 $db->setQuery($query);
 $sezons = $db->loadObjectList();
 
+$query        = "SELECT DISTINCT type_product "
+        . "FROM #__vm_product "
+        . "WHERE product_type = 'rezina' AND type_product IS NOT NULL AND type_product <> '' AND product_publish = 'Y' "
+        . "ORDER BY type_product";
+$db->setQuery($query);
+$type_product = $db->loadObjectList();
+
 $query = "SELECT DISTINCT CONVERT(product_width, SIGNED) width "
         . "FROM #__vm_product "
         . "WHERE product_type = 'rezina' AND product_width > 0 AND product_publish = 'Y' "
@@ -62,6 +69,18 @@ $length = $db->loadObjectList();
             foreach ($sezons as $item) {
                 $sel = (JRequest::getVar('sezon') == $item->sezon) ? 'selected' : '';
                 echo '<option ' . $sel . ' value="' . $item->sezon . '">' . $item->sezon . '</option>';
+            }
+            ?>
+        </select>
+    </div>
+    <div class="calctyres_row">
+        Тип автомобиля<br />
+        <select id="calctyres_type_product">
+            <option></option>
+            <?php
+            foreach ($type_product as $item) {
+                $sel = (JRequest::getVar('type_product') == $item->type_product) ? 'selected' : '';
+                echo '<option ' . $sel . ' value="' . $item->type_product . '">' . $item->type_product . '</option>';
             }
             ?>
         </select>
@@ -159,7 +178,7 @@ $length = $db->loadObjectList();
         border-top: 1px solid #b6b6b6;
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
     }
-    #calctyres_marka, #calctyres_sezon{
+    #calctyres_marka, #calctyres_sezon, #calctyres_type_product{
         width: 90%;
     }
     div.calctyres_sizes select{
@@ -186,19 +205,24 @@ $length = $db->loadObjectList();
             var height = $('#calctyres_height').val();
             var length = $('#calctyres_length').val();
             var sezon = $('#calctyres_sezon').val();
+            var type_product = $('#calctyres_type_product').val();
 
-            var url = 'index.php?option=com_virtuemart&page=shop.browse&category_id=<?php echo JRequest::getInt('category_id'); ?>&Itemid=<?php echo JRequest::getInt('Itemid'); ?>';
+            var sep = '&amp;';
+            sep = sep.replace('amp;', '');
+            var url = 'index.php?option=com_virtuemart' + sep + 'page=shop.browse' + sep + 'category_id=17' + sep + 'Itemid=29';
 
             if (marka)
-                url += '&marka=' + marka;
+                url += sep + 'marka=' + marka;
             if (width)
-                url += '&width=' + width;
+                url += sep + 'width=' + width;
             if (height)
-                url += '&height=' + height;
+                url += sep + 'height=' + height;
             if (length)
-                url += '&length=' + length;
+                url += sep + 'length=' + length;
             if (sezon)
-                url += '&sezon=' + sezon;
+                url += sep + 'sezon=' + sezon;
+            if (type_product)
+                url += sep + 'type_product=' + type_product;
 
             document.location = url;
         });
@@ -208,6 +232,7 @@ $length = $db->loadObjectList();
             $('#calctyres_height').val('');
             $('#calctyres_length').val('');
             $('#calctyres_sezon').val('');
+            $('#calctyres_type_product').val('');
             $('div.calctyres input[name="send"]').click();
         });
     });

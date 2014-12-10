@@ -408,6 +408,9 @@ if ($_GET['data_in'] > 0) {
 if ($_GET['data_out'] > 0) {
     $q .= ' AND `#__{vm}_product`.`year` <= ' . $_GET['data_out'] . ' ';
 }
+if ($_GET['type_product']) {
+    $q .= ' AND `#__{vm}_product`.`type_product` = \'' . $_GET['type_product'] . '\' ';
+}
 
 $count .= $q;
 //$q .= "\n GROUP BY `#__{vm}_product`.`group_article` ";

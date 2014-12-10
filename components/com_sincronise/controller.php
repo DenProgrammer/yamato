@@ -1505,7 +1505,7 @@ class SincroniseController extends JController {
             $db->query();
         }
         $string = strval($obj->return);
-//        echo $string;
+        echo $string;
 
         $xml = new SimpleXMLElement($string);
 
@@ -1543,9 +1543,9 @@ class SincroniseController extends JController {
             $obj->product_in_stock = $item->Value[$columns['Kolichestvo']] . '';
             $obj->product_name     = trim($item->Value[$columns['Name']] . '');
             $obj->product_price    = $item->Value[$columns['Cena']] . '';
-            if (!$obj->product_price > 0) {
-                $obj->product_price = $item->Value[$columns['OptovayaCenaUSD']] . '';
-            }
+            $obj->price_opt_usd    = $item->Value[$columns['OptovayaCenaUSD']] . '';
+            $obj->price_opt_kgs    = $item->Value[$columns['OptovayaCenaKGS']] . '';
+
             $obj->product_currency_link = '';
             $obj->product_currency      = $item->Value[$columns['Valyuta']] . '';
 
@@ -1595,8 +1595,9 @@ class SincroniseController extends JController {
             $obj->DataProdaji          = 0;
             $obj->Properties           = strval($item->Value[$columns['Properties']]);
             if ($obj->Properties) {
-                $obj->Properties = json_decode('{' . $obj->Properties . '}', true);
-                $obj->sezon      = $obj->Properties['Сезонность'];
+                $obj->Properties   = json_decode('{' . $obj->Properties . '}', true);
+                $obj->sezon        = $obj->Properties['Сезонность'];
+                $obj->type_product = trim($obj->Properties['Тип автомобиля:']);
             }
 
             if (JRequest::getVar('debug')) {
