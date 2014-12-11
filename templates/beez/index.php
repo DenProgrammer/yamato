@@ -65,7 +65,7 @@ if ($ajax == 1) {
             $document->setTitle($title);
     }
 
-    if ($_GET['Itemid'] != 1) {
+    if (JRequest::getInt('Itemid') != 1) {
         $document->setTitle($document->getTitle() . ' - автосалон «Ямато», Бишкек, Кыргызстан. Автомобили из США, Европы и Японии в наличии и на заказ');
     }
     ?>
@@ -244,21 +244,158 @@ if ($ajax == 1) {
                             </table>
                         <?php } ?>
                     </div>
-                    <div class="topmenu">
-                        <jdoc:include type="modules" name="menu" />
-                    </div>
-            <jdoc:include type="message" />
-            <?php if ((!$_GET['product_id']) and ($_GET['page'] == 'shop.browse') and ($_GET['option'] == 'com_virtuemart')) { ?>
-                <jdoc:include type="modules" name="user1" style="xhtml" />
-            <?php } ?>
-            <jdoc:include type="modules" name="user5" style="xhtml" />
-            <jdoc:include type="component" />
-            <jdoc:include type="modules" name="user6" style="xhtml" />
-        </td>
-    </tr>
-    <tr class="gsep"><td></td></tr>
-    <tr>
-        <td><jdoc:include type="modules" name="user2" style="xhtml" /></td>
+
+                    <?php if (JRequest::getInt('Itemid') == 1) { ?>
+                        <div class="moduletable-mainpage">
+                            <div class="autopartsForms">
+                                <h1>Поиск автозапчастей</h1>
+                                <div id="columnOne">
+                                    <h3>По номеру запчасти</h3>
+                                    <script type="text/javascript">
+                                        function checkOem(form, oem) {
+                                            var reg = new RegExp('([a-zйцукенггшщзфыывапролдячсмить0-9])', 'gi');
+                                            if (reg.test(oem)) {
+                                                form.submit();
+                                            } else {
+                                                alert('MOD_AUTO_INCORRECT_OEM');
+                                            }
+                                            return false;
+                                        }
+                                    </script>
+                                    <p class="italic">Пример: 48820-47010</p>
+                                    <form action="http://parts.yamato.kg/index.php" method="get" id="search_frm" name="oemSearchForm" class="" onSubmit="checkOem(this, document.oemSearchForm.keyword);
+                                                    return false;">
+                                        <input id="search_field" class="g_input" type="text" name="keyword" value="" />
+                                        <input type="submit" name="OemSubmit" value="Искать" id="OemSubmit" />
+                                        <input type="hidden" name="Itemid" value="627" />
+                                        <input type="hidden" name="option" value="com_auto" />
+                                        <input type="hidden" name="task" value="detail.search" />
+                                    </form>
+                                </div>
+                                <div id="columnTwo">
+                                    <h3>по VIN-коду (номеру кузова) автомобиля</h3>
+                                    <h2>Левый руль <span class="italic">Пример: WAUBH54B11N111054</span></h2>
+                                    <script type="text/javascript">
+                                        function checkVinValue(value, submit_btn) {
+                                            value = value.replace(/[^\da-zA-Z]/g, '');
+                                            var expr = new RegExp('\^[A-z0-9]{12}[0-9]{5}\$', 'i');
+                                            if (expr.test(value))
+                                            {
+                                                jQuery(submit_btn).attr('disabled', '1');
+                                                jQuery('#VINInput').attr('class', 'g_input');
+                                                window.location = 'http://parts.yamato.kg/index.php?option=com_guayaquil&view=vehicles&ft=findByVIN&c=&vin=$vin$&ssd=&Itemid=621'.replace('\$vin\$', value);
+                                            } else
+                                                jQuery('#VINInput').attr('class', 'g_input_error');
+                                        }
+                                    </script>
+                                    <form name="findByVIN" onSubmit="checkVinValue(this.vin.value);
+                                                    return false;" id="findByVIN">
+                                        <input name="vin" type="text" id="vin" size="17" value="">
+                                        <input type="submit" name="vinSubmit" value="Искать" id="vinSubmit">
+                                        <input type="hidden" name="option" value="com_guayaquil">
+                                        <input type="hidden" name="view" value="vehicles">
+                                        <input type="hidden" name="ft" value="findByVIN">
+                                    </form>
+                                </div>
+                                <div id="columnThree">
+                                    <h2>Правый руль <span class="italic">Пример: FNN15-502358</span></h2>
+                                    <script type="text/javascript">
+                                        function checkFrameValue(frame, frameno, submit_btn) {
+                                            frame = frame.replace(/[^\da-zA-Z]/g, '');
+                                            frameno = frameno.replace(/[^\da-zA-Z]/g, '');
+                                            var frexpr = new RegExp('\^[A-z0-9]{3,7}\$', 'i');
+                                            var frnexpr = new RegExp('\^[0-9]{3,7}\$', 'i');
+                                            var result = true;
+
+                                            if (frexpr.test(frame))
+                                                jQuery('#FrameInput').attr('class', 'g_input');
+                                            else {
+                                                jQuery('#FrameInput').attr('class', 'g_input_error');
+                                                result = false;
+                                            }
+
+                                            if (frnexpr.test(frameno))
+                                                jQuery('#FrameNoInput').attr('class', 'g_input');
+                                            else {
+                                                jQuery('#FrameNoInput').attr('class', 'g_input_error');
+                                                result = false;
+                                            }
+
+                                            if (result) {
+                                                jQuery(submit_btn).attr('disabled', '1');
+                                                window.location = 'http://parts.yamato.kg/index.php?option=com_guayaquil&view=vehicles&ft=findByFrame&c=&frame=$frame$&frameNo=$frameno$&Itemid=621'.replace('\$frame\$', frame).replace('\$frameno\$', frameno);
+                                            }
+
+                                            return false;  // return result;
+                                        }
+                                    </script>
+                                    <form name="findByFrame" onSubmit="return checkFrameValue(this.frame.value, this.frameNo.value, this.frameSubmit);" id="findByFrame">
+                                        <input name="frame" type="text" id="frame" size="17" value="">
+                                        -
+                                        <input name="frameNo" type="text" id="frameNo" size="17" value="">
+                                        <input type="submit" name="frameSubmit" value="Искать" id="frameSubmit">
+                                    </form>
+                                </div>
+                                <br clear="all" />
+                                <div id="catalogueSearch">
+                                    <h3>По каталогу</h3>
+                                    <ul class="catalogs-links" id="colOne">
+                                        <li><img src="/images/audi.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=EAU1007&amp;ssd=&amp;spi2=t&amp;Itemid=627">Audi</a></li>
+                                        <li><img src="/images/bmw.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=BMW201402&amp;ssd=&amp;Itemid=627">BMW</a></li>
+                                        <li><img src="/images/chevrolet.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=ch1106&amp;ssd=&amp;Itemid=627">Chevrolet</a></li>
+                                        <li><img src="/images/citroen.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=AC1205&amp;ssd=&amp;Itemid=627">Citroen</a></li>
+                                    </ul>
+                                    <ul class="catalogs-links" id="colTwo">
+                                        <li><img src="/images/fiat.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=FFiat112013&amp;ssd=&amp;Itemid=627">Fiat</a></li>
+                                        <li><img src="/images/ford.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=FEE201202&amp;ssd=&amp;Itemid=627">Ford Europe</a></li>
+                                        <li><img src="/images/honda.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=HONDA201401&amp;ssd=&amp;Itemid=627">Honda</a></li>
+                                        <li><img src="/images/hyundai.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=HYW201409&amp;ssd=&amp;spi2=t&amp;Itemid=627">Hyundai</a></li>
+                                    </ul>
+                                    <ul class="catalogs-links" id="colThree">
+                                        <li><img src="/images/kia.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=KIA201406&amp;ssd=&amp;spi2=t&amp;Itemid=627">Kia</a></li>
+                                        <li><img src="/images/landrover.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=LRE201312&amp;ssd=&amp;Itemid=627">Land Rover Europe</a></li>
+                                        <li><img src="/images/lexus.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=LA201311&amp;ssd=&amp;spi2=t&amp;Itemid=627">Lexus</a></li>
+                                        <li><img src="/images/mazda.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=MAZDA201401&amp;ssd=&amp;spi2=t&amp;Itemid=627">Mazda</a></li>
+                                    </ul>
+                                    <ul class="catalogs-links" id="colFour">
+                                        <li><img src="/images/mercedes.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=MB2222&amp;ssd=&amp;Itemid=627">Mercedes</a></li>
+                                        <li><img src="/images/mmc.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=MMC201407&amp;ssd=&amp;spi2=t&amp;Itemid=627">Mitsubishi</a></li>
+                                        <li><img src="/images/nissan.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=ne1210&amp;ssd=&amp;spi=t&amp;Itemid=627">Nissan</a></li>
+                                        <li><img src="/images/opel.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=op1210&amp;ssd=&amp;Itemid=627">Opel/Vauxhall</a></li>
+                                    </ul>
+                                    <ul class="catalogs-links" id="colFive">
+                                        <li><img src="/images/peugeot.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=AP1211&amp;ssd=&amp;Itemid=627">Peugeot</a></li>
+                                        <li><img src="/images/porsche.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=PO340&amp;ssd=&amp;spi2=t&amp;Itemid=627">Porsche</a></li>
+                                        <li><img src="/images/renault.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=RENAULT201305&amp;ssd=&amp;Itemid=627">Renault</a></li>
+                                        <li><img src="/images/seat.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=ESE533&amp;ssd=&amp;spi2=t&amp;Itemid=627">Seat</a></li>
+                                    </ul>
+                                    <ul class="catalogs-links" id="colSix">
+                                        <li><img src="/images/skoda.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=ESK539&amp;ssd=&amp;spi2=t&amp;Itemid=627">Skoda</a></li>
+                                        <li><img src="/images/subaru.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=SSF1302&amp;ssd=&amp;Itemid=627">Subaru Japan</a></li>
+                                        <li><img src="/images/toyota.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=TA201311&amp;ssd=&amp;spi2=t&amp;Itemid=627">Toyota</a></li>
+                                        <li><img src="/images/vw.png" /><a href="http://parts.yamato.kg/index.php?option=com_guayaquil&amp;view=catalog&amp;c=EVW1007&amp;ssd=&amp;spi2=t&amp;Itemid=627">VW</a></li>
+                                    </ul>
+                                </div>
+                                <br clear="all" />
+
+                            </div>
+
+                        <?php } ?>
+                        <div class="topmenu">
+                            <jdoc:include type="modules" name="menu" />
+                        </div>
+                        <jdoc:include type="message" />
+                        <?php if ((!$_GET['product_id']) and ($_GET['page'] == 'shop.browse') and ($_GET['option'] == 'com_virtuemart')) { ?>
+                            <jdoc:include type="modules" name="user1" style="xhtml" />
+                        <?php } ?>
+                        <jdoc:include type="modules" name="user5" style="xhtml" />
+                        <jdoc:include type="component" />
+                        <jdoc:include type="modules" name="user6" style="xhtml" />
+                </td>
+            </tr>
+            <tr class="gsep"><td></td></tr>
+            <tr>
+                <td><jdoc:include type="modules" name="user2" style="xhtml" /></td>
     </tr>
     <tr class="gsep"><td colspan="5"></td></tr>
     <tr>
@@ -302,4 +439,4 @@ if ($ajax == 1) {
 
     </body>
     </html>
-<?php } ?>
+<?php } 
