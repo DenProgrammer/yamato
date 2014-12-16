@@ -38,7 +38,7 @@ $power = $db->loadObjectList();
     <div class="calctyres_row">
         Производитель<br />
         <select id="calctyres_marka">
-            <option></option>
+            <option>Все</option>
             <?php
             foreach ($markas as $item) {
                 $sel = (JRequest::getVar('marka') == $item->marka) ? 'selected' : '';
@@ -51,7 +51,7 @@ $power = $db->loadObjectList();
         <div class="calctyres_col">
             Клемы<br />
             <select id="calctyres_clema">
-                <option></option>
+                <option>Все</option>
                 <?php
                 foreach ($clema as $item) {
                     $sel = (JRequest::getVar('clema') == $item->clema) ? 'selected' : '';
@@ -64,7 +64,7 @@ $power = $db->loadObjectList();
         <div class="calctyres_col">
             Полярность<br />
             <select id="calctyres_polar">
-                <option></option>
+                <option>Все</option>
                 <?php
                 foreach ($polar as $item) {
                     $sel = (JRequest::getVar('polar') == $item->polar) ? 'selected' : '';
@@ -77,7 +77,7 @@ $power = $db->loadObjectList();
         <div class="calctyres_col">
             Ёмкость<br />
             <select id="calctyres_power">
-                <option></option>
+                <option>Все</option>
                 <?php
                 foreach ($power as $item) {
                     $sel = (JRequest::getVar('power') == $item->Power) ? 'selected' : '';
