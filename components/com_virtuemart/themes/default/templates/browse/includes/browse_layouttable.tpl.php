@@ -6,9 +6,6 @@ mm_showMyFileName(__FILE__);
 <div class="brdcrambs" >
     <a href="index.php">Каталог</a> / 
     <a href="index.php?option=com_virtuemart&page=shop.browse&category_id=<?php echo $category_id; ?>&Itemid=<?php echo JRequest::getInt('Itemid'); ?>"><?php echo $category_name; ?></a>
-    <?php if ($category_id == 17 && (isset($_GET['marka']))) { ?>
-        / <a href="index.php?option=com_virtuemart&page=shop.browse&category_id=<?php echo $category_id; ?>&Itemid=<?php echo JRequest::getInt('Itemid'); ?>&marka=<?php echo $_GET['marka']; ?>"><?php echo $_GET['marka']; ?></a>
-    <?php } ?>
     <?php
     if (isset($referer['model']) && isset($referer['cm']) && isset($referer['rul'])) {
         echo "<a style='float:right;' href='$ref'>Вернутся к результатам поиска</a>";

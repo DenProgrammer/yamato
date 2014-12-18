@@ -81,7 +81,14 @@ $group_url = 'index.php?page=shop.product_details&option=com_virtuemart&flypage=
     });
 </script>
 <div class="brdcrambs" >
-    <a href="index.php">Каталог</a> / <a href="index.php?option=com_virtuemart&page=shop.browse&category_id=<?php echo $category_id; ?>&Itemid=29"><?php echo $prod->category_name; ?></a>
+    <a href="index.php">Каталог</a>
+    / 
+    <a href="index.php?option=com_virtuemart&page=shop.browse&category_id=<?php echo $category_id; ?>&Itemid=29"><?php echo $prod->category_name; ?></a>
+    <?php if ($prod->marka) { ?>
+        / <a href="index.php?option=com_virtuemart&page=shop.browse&category_id=<?php echo $category_id; ?>&Itemid=<?php echo JRequest::getInt('Itemid'); ?>&marka=<?php echo $prod->marka; ?>">
+            <?php echo $prod->marka; ?>
+        </a>
+    <?php } ?>
 </div>
 <table border="0" style="width: 100%;">
     <tbody>
@@ -126,10 +133,10 @@ $group_url = 'index.php?page=shop.product_details&option=com_virtuemart&flypage=
                 <br />
                 <div class="detprice">
                     <?php
-                    if ($prod->price > 0){
+                    if ($prod->price > 0) {
                         echo 'Цена: ' . $product_price;
                     }
-                    if ($prod->product_discount_id > 0){
+                    if ($prod->product_discount_id > 0) {
                         echo '<img class="discount2" src="images/discount.png" />';
                     }
                     ?>

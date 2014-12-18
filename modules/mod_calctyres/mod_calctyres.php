@@ -52,7 +52,7 @@ $length = $db->loadObjectList();
     <div class="calctyres_row">
         Производитель<br />
         <select id="calctyres_marka">
-            <option>Все</option>
+            <option value="">Все</option>
             <?php
             foreach ($markas as $item) {
                 $sel = (JRequest::getVar('marka') == $item->marka) ? 'selected' : '';
@@ -64,7 +64,7 @@ $length = $db->loadObjectList();
     <div class="calctyres_row">
         Сезон<br />
         <select id="calctyres_sezon">
-            <option>Все</option>
+            <option value="">Все</option>
             <?php
             foreach ($sezons as $item) {
                 $sel = (JRequest::getVar('sezon') == $item->sezon) ? 'selected' : '';
@@ -76,7 +76,7 @@ $length = $db->loadObjectList();
     <div class="calctyres_row">
         Тип автомобиля<br />
         <select id="calctyres_type_product">
-            <option>Все</option>
+            <option value="">Все</option>
             <?php
             foreach ($type_product as $item) {
                 $sel = (JRequest::getVar('type_product') == $item->type_product) ? 'selected' : '';
@@ -89,7 +89,7 @@ $length = $db->loadObjectList();
         <div class="calctyres_col">
             Ширина<br />
             <select id="calctyres_width">
-                <option>Все</option>
+                <option value="">Все</option>
                 <?php
                 foreach ($width as $item) {
                     $sel = (JRequest::getVar('width') == $item->width) ? 'selected' : '';
@@ -102,7 +102,7 @@ $length = $db->loadObjectList();
         <div class="calctyres_col">
             Профиль<br />
             <select id="calctyres_height">
-                <option>Все</option>
+                <option value="">Все</option>
                 <?php
                 foreach ($height as $item) {
                     $sel = (JRequest::getVar('height') == $item->height) ? 'selected' : '';
@@ -115,7 +115,7 @@ $length = $db->loadObjectList();
         <div class="calctyres_col">
             Диаметр<br />
             <select id="calctyres_length">
-                <option>Все</option>
+                <option value="">Все</option>
                 <?php
                 foreach ($length as $item) {
                     $sel = (JRequest::getVar('length') == $item->length) ? 'selected' : '';

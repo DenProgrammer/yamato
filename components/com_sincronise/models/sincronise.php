@@ -253,11 +253,11 @@ class SincroniseModelSincronise extends JModel {
         $db->setQuery($sql);
         $db->query();
 
-        if ((count($product_image) > 0) and ($product_id > 0)) {
-            $sql = 'DELETE FROM #__vm_product_files WHERE `uploaded_from1C`=1 AND file_product_id=' . $product_id;
-            $db->setQuery($sql);
-            $db->query();
+        $sql = 'DELETE FROM #__vm_product_files WHERE `uploaded_from1C`=1 AND file_product_id=' . $product_id;
+        $db->setQuery($sql);
+        $db->query();
 
+        if ((count($product_image) > 0) and ($product_id > 0)) {
             foreach ($product_image as $image) {
                 $sql = "INSERT INTO `#__vm_product_files` (
                         `file_product_id`, `file_name`, `file_title`, `file_description`, 
