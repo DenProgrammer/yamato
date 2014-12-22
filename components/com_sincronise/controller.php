@@ -1061,9 +1061,19 @@ class SincroniseController extends JController {
         $client    = new SoapClient($this->url, $dop_param);
         $param     = array('ID' => '');
         $obj       = $client->MK_GetListOfOrdersStatus();
-        //echo $obj->return;
+        echo $obj->return;
         $rss       = new SimpleXMLElement($obj->return);
-        //pr($rss);
+        
+        $columns = array();
+        $i       = 0;
+        foreach ($rss->column as $k => $item) {
+            $columns[strval($item->Name)] = $i;
+            $i++;
+        }
+
+        if (JRequest::getVar('debug')) {
+            pr($columns);
+        }
         unset($rss->column);
 
         $sql = "DELETE FROM `#__cagents_avto`";
@@ -1075,11 +1085,13 @@ class SincroniseController extends JController {
             $cagent_link   = $rss->row[$i]->Value[1];
             $avto_link     = $rss->row[$i]->Value[3];
             $etap_dostavki = trim($rss->row[$i]->Value[6]);
+            
+            $NomerSredstvaDostavki = trim($rss->row[$i]->Value[11]);
 
             $sql = "INSERT INTO `#__cagents_avto` (
-                    `cdate`, `cagent_link`, `avto_link`, `etap_dostavki`
+                    `cdate`, `cagent_link`, `avto_link`, `etap_dostavki`, `nomer_sredstva_dostavki`
                     ) VALUES (
-                    '$data', '$cagent_link', '$avto_link', '$etap_dostavki')";
+                    '$data', '$cagent_link', '$avto_link', '$etap_dostavki', '$NomerSredstvaDostavki')";
             $db->setQuery($sql);
             $db->query();
         }
