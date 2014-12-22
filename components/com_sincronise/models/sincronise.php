@@ -221,6 +221,13 @@ class SincroniseModelSincronise extends JModel {
             $db->setQuery($sql);
             $db->query();
             unset($product_image[0]);
+        } else {
+            $sql = "UPDATE `#__vm_product` SET
+                    `product_thumb_image`='', 
+                    `product_full_image`=''
+                    WHERE `product_id`=$product_id AND `writeble`=1";
+            $db->setQuery($sql);
+            $db->query();
         }
 
 
@@ -253,7 +260,7 @@ class SincroniseModelSincronise extends JModel {
         $db->setQuery($sql);
         $db->query();
 
-        $sql = 'DELETE FROM #__vm_product_files WHERE `uploaded_from1C`=1 AND file_product_id=' . $product_id;
+        $sql = 'DELETE FROM #__vm_product_files WHERE `uploaded_from1C` = 1 AND file_product_id = ' . $product_id;
         $db->setQuery($sql);
         $db->query();
 
