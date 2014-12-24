@@ -7,8 +7,8 @@ $db = JFactory::getDBO();
 $product_id = JRequest::getInt('id');
 
 $sql   = 'SELECT p.*, ('
-        . ' select nomer_sredstva_dostavki from #__cagents_avto where avto_link = p.`link`'
-        . ') NumSrDost '
+        . ' select nomer_sredstva_dostavki from #__cagents_avto where avto_link = p.`link` limit 1'
+        . ') AS NumSrDost '
         . 'FROM `#__vm_product` p '
         . 'WHERE p.`product_id`=' . $product_id . ' '
         . 'LIMIT 1';
