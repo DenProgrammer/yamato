@@ -128,7 +128,9 @@ foreach ($mas2 as $item) {
         <tr>
             <td valign="top" width="290">
                 <div class="imagecont">
-                    <a rel="lightbox[product<?php echo $prod->product_id; ?>]" title="SUBARU FORESTER 2005 г. (6677)" href="<?php echo $prod->product_full_image; ?>">
+                    <a rel="lightbox[product<?php echo $prod->product_id; ?>]" 
+                       title="<?php echo $prod->product_name . ' (' . substr($prod->NomerKuzov, -4) . ')'; ?>" 
+                       href="<?php echo $prod->product_full_image; ?>">
                         <img border="0" width="260" alt="<?php echo $prod->product_name; ?>" title="<?php echo $prod->product_name; ?>" src="<?php echo $prod->product_full_image; ?>">
                     </a>
                     <div style="margin-top:10px;text-align:left;" class="additionalimages">
@@ -139,7 +141,11 @@ foreach ($mas2 as $item) {
                         <?php } ?>
                     </div>
                 </div>
-                <div class="ask_seller"><a class="button" href="index.php?page=shop.ask&flypage=flypage.tpl&product_id=<?php echo $product_id ?>&option=com_virtuemart">Задать вопрос по этому товару</a></div>
+                <div class="ask_seller">
+                    <a class="button" href="index.php?page=shop.ask&flypage=flypage.tpl&product_id=<?php echo $product_id ?>&option=com_virtuemart">
+                        Задать вопрос по этому товару
+                    </a>
+                </div>
             </td>
             <td width="10">&nbsp;</td>
             <td valign="top" align="left">
