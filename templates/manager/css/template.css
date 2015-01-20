@@ -320,3 +320,11 @@ margin-left: -27px;
 position: absolute;
 margin-top: 4px;
 }
+
+.likes{
+    position: fixed; 
+    right: 0px; 
+    top: 200px; 
+    width: 45px; 
+    height: 164px;
+}

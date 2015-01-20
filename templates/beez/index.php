@@ -185,7 +185,7 @@ if ($ajax == 1) {
         <?php } ?>
 
         <?php if ($countuserlikes > 0) { ?>
-            <div style="position: fixed; right: 0px; top: 200px; width: 45px; height: 164px; background: url(images/likesfon.png) center center no-repeat;">
+            <div class="likes">
                 <jdoc:include type="modules" name="likes" style="xhtml" />
             </div>
         <?php } ?>

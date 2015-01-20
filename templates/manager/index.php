@@ -9,6 +9,8 @@
  * See COPYRIGHT.php for copyright notices and details.
  */
 defined('_JEXEC') or die('Restricted access');
+
+$countuserlikes = $this->countModules('likes');
 ?>
 <?php echo '<?xml version="1.0" encoding="utf-8"?' . '>'; ?>
 <!DOCTYPE html>
@@ -75,6 +77,11 @@ defined('_JEXEC') or die('Restricted access');
         <div id="btnup"></div>
     </div>
     <div class="wrapper">
+        <?php if ($countuserlikes > 0) { ?>
+            <div class="likes">
+                <jdoc:include type="modules" name="likes" style="xhtml" />
+            </div>
+        <?php } ?>
         <div class="head" >
             <div class="logo" >
                 <jdoc:include type="modules" name="logo" />
