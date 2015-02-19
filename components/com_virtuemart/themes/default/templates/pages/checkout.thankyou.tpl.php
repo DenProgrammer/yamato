@@ -1,80 +1,100 @@
-<?php 
-if( !defined( '_VALID_MOS' ) && !defined( '_JEXEC' ) ) die( 'Direct Access to '.basename(__FILE__).' is not allowed.' );
+<?php
+if (!defined('_VALID_MOS') && !defined('_JEXEC'))
+    die('Direct Access to ' . basename(__FILE__) . ' is not allowed.');
 /**
  * This is the page that is shown when the order has been placed.
  * It is used to thank the customer for her/his order and show a link 
  * to the order details.
-*
-* @version $Id: checkout.thankyou.tpl.php 1364 2008-04-09 16:44:28Z soeren_nb $
-* @package VirtueMart
-* @subpackage themes
-* @copyright Copyright (C) 2004-2008 soeren - All rights reserved.
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
-* VirtueMart is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See /administrator/components/com_virtuemart/COPYRIGHT.php for copyright notices and details.
+ *
+ * @version $Id: checkout.thankyou.tpl.php 1364 2008-04-09 16:44:28Z soeren_nb $
+ * @package VirtueMart
+ * @subpackage themes
+ * @copyright Copyright (C) 2004-2008 soeren - All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ * VirtueMart is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See /administrator/components/com_virtuemart/COPYRIGHT.php for copyright notices and details.
 
-* http://virtuemart.net
-*/
-
-mm_showMyFileName( __FILE__ );
+ * http://virtuemart.net
+ */
+mm_showMyFileName(__FILE__);
 
 global $VM_LANG;
 ?>
 
 <div class="checkout_title">
-	<?php echo $VM_LANG->_('PHPSHOP_THANKYOU_SUCCESS')?>
+    <?php echo $VM_LANG->_('PHPSHOP_THANKYOU_SUCCESS') ?>
 </div>
 <div class="checkout_row1" >
-	<?php echo $VM_LANG->_('PHPSHOP_EMAIL_SENDTO') .": <strong>". $user->user_email . '</strong>'; ?>
+    <?php echo $VM_LANG->_('PHPSHOP_EMAIL_SENDTO') . ": <strong>" . $user->user_email . '</strong>'; ?>
 </div>
-  
+
 <!-- Begin Payment Information -->
 <?php
-if( empty($auth['user_id'])) {
-	return;
+if (empty($auth['user_id'])) {
+    return;
 }
-if ($db->f("order_status") == "P" ) {
-	// Copy the db object to prevent it gets altered
-	$db_temp = ps_DB::_clone( $db );
- /** Start printing out HTML Form code (Payment Extra Info) **/ ?>
- <br />
-<table width="100%">
-  <tr>
-    <td width="100%" align="center">
-    	<?php 
-	    /**
-	     * PLEASE DON'T CHANGE THIS SECTION UNLESS YOU KNOW WHAT YOU'RE DOING
-	     */
-	    // Try to get PayPal/PayMate/Worldpay/whatever Configuration File
-	    @include( CLASSPATH."payment/".$db->f("payment_class").".cfg.php" );
-	    
-		$vmLogger->debug('Beginning to parse the payment extra info code...' );
-		
-	    // Here's the place where the Payment Extra Form Code is included
-	    // Thanks to Steve for this solution (why make it complicated...?)
-	    if( eval('?>' . $db->f("payment_extrainfo") . '<?php ') === false ) {
-	    	$vmLogger->debug( "Error: The code of the payment method ".$db->f( 'payment_method_name').' ('.$db->f('payment_method_code').') '
-	    	.'contains a Parse Error!<br />Please correct that first' );
-	    }
-	    else {
-	    	$vmLogger->debug('Successfully parsed the payment extra info code.' );
-	    }
-	    // END printing out HTML Form code (Payment Extra Info)
+if ($db->f("order_status") == "P") {
+    // Copy the db object to prevent it gets altered
+    $db_temp = ps_DB::_clone($db);
+    /** Start printing out HTML Form code (Payment Extra Info) * */
+    ?>
+    <br />
+    <table width="100%">
+        <tr>
+            <td width="100%" align="center">
+                <?php
+                /**
+                 * PLEASE DON'T CHANGE THIS SECTION UNLESS YOU KNOW WHAT YOU'RE DOING
+                 */
+                // Try to get PayPal/PayMate/Worldpay/whatever Configuration File
+                @include( CLASSPATH . "payment/" . $db->f("payment_class") . ".cfg.php" );
 
-      	?>
-    </td>
-  </tr>
-</table>
-<br />
-<?php
-$db = $db_temp;
+                $vmLogger->debug('Beginning to parse the payment extra info code...');
+
+                // Here's the place where the Payment Extra Form Code is included
+                // Thanks to Steve for this solution (why make it complicated...?)
+                if (eval('?>' . $db->f("payment_extrainfo") . '<?php ') === false) {
+                    $vmLogger->debug("Error: The code of the payment method " . $db->f('payment_method_name') . ' (' . $db->f('payment_method_code') . ') '
+                            . 'contains a Parse Error!<br />Please correct that first');
+                } else {
+                    $vmLogger->debug('Successfully parsed the payment extra info code.');
+                }
+                // END printing out HTML Form code (Payment Extra Info)
+                ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <script>
+                    jQuery(function($) {
+                        $('#mobilnikLogo').click(function() {
+                            $.post('index.php?option=com_virtuemart&action=createMobilnikPayment&tmpl=ajax', {orderId:<?php echo $db->f("order_id"); ?>}, function(data) {
+                                data = $.parseJSON(data);
+                                $('#mobilnikContent').html(data.tranthaction);
+                            });
+                        });
+                    });
+                </script>
+                <img id="mobilnikLogo" src="images/new_logo_mobilnik.png" />
+                <div id="mobilnikContent">
+
+                </div>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <?php
+    $db = $db_temp;
 }
 ?>
 <div class="checkout_row2" >
-	<a href="<?php $sess->purl(SECUREURL.basename($_SERVER['PHP_SELF'])."?page=account.order_details&order_id=". $order_id) ?>" onclick="if( parent.parent.location ) { parent.parent.location = this.href.replace(/index2.php/, 'index.php' ); };">
- 		<?php echo $VM_LANG->_('PHPSHOP_ORDER_LINK') ?>
- 	</a>
+    <a href="<?php $sess->purl(SECUREURL . basename($_SERVER['PHP_SELF']) . "?page=account.order_details&order_id=" . $order_id) ?>" onclick="if (parent.parent.location) {
+                parent.parent.location = this.href.replace(/index2.php/, 'index.php');
+            }
+            ;">
+<?php echo $VM_LANG->_('PHPSHOP_ORDER_LINK') ?>
+    </a>
 </div>

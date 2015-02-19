@@ -22,7 +22,34 @@ global $mosConfig_absolute_path, $product_id, $vmInputFilter, $vmLogger;
 /* Load the virtuemart main parse code */
 require_once( dirname(__FILE__) . '/virtuemart_parser.php' );
 
+if (JRequest::getVar('action') == 'createMobilnikPayment') {
+    $orderId      = JRequest::getInt('orderId');
+    $user         = JFactory::getUser();
+    $userId       = $user->id;
+    $tranthaction = time() . rand(1000, 9999);
+    $status       = 0;
+    $note         = null;
+    $cdate        = time();
 
+    $mdb = JFactory::getDbo();
+    $sql = "SELECT * FROM #__payments WHERE order_id = $orderId";
+    $mdb->setQuery($sql);
+
+    $payment = $mdb->LoadObject();
+
+    if ($payment->id > 0) {
+        $tranthaction = $payment->tranthaction;
+    } else {
+        $sql = "INSERT INTO #__payments VALUES (NULL, $cdate, $userId, $orderId, 12, $tranthaction, '$note', $status)";
+        $mdb->setQuery($sql);
+        $mdb->query();
+    }
+
+    echo json_encode(array(
+        'tranthaction' => $tranthaction
+    ));
+    exit;
+}
 
 $my_page    = explode('.', $page);
 $modulename = $my_page[0];
