@@ -89,7 +89,6 @@ $countuserlikes = $this->countModules('likes');
             <a style="margin-top:10px 0 0 20px;" href="http://m.yamato.kg">Мобильная версия</a>
             <ul class="topmenu" >
                 <li class="item1"><a href="index.php?component=com_manager&Itemid=32">Закрытый раздел</a></li>
-                <li class="item2"><a href="http://yamato.kg" >www.yamato.kg</a></li>
                 <li class="item3"><jdoc:include type="modules" name="login" style="xhtml" /></li>
             </ul>
         </div>

@@ -6,6 +6,7 @@
 # Joomla! is Free Software
 ##
 
+php_flag always_populate_raw_post_data On
 
 #####################################################
 #  READ THIS COMPLETELY IF YOU CHOOSE TO USE THIS FILE

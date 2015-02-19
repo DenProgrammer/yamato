@@ -350,15 +350,12 @@ if ($num_rows == 0 && (!empty($keyword) || !empty($keyword1))) {
             }
         }
 
+        $full_image_width  = 800;
+        $full_image_height = 600;
+
         // Get image size information and add the full URL
         if (substr($product_full_image, 0, 4) != 'http') {
             // This is a local image
-            if (file_exists(IMAGEPATH . 'product/' . $product_full_image)) {
-                $full_image_info   = getimagesize(IMAGEPATH . 'product/' . $product_full_image);
-                $full_image_width  = $full_image_info[0] + 40;
-                $full_image_height = $full_image_info[1] + 40;
-            }
-
             $product_full_image = IMAGEURL . 'product/' . $product_full_image;
         } elseif (!isset($full_image_width) || !isset($full_image_height)) {
             // This is a URL image
@@ -466,4 +463,3 @@ if ($num_rows == 0 && (!empty($keyword) || !empty($keyword1))) {
      */
     echo $tpl->fetch($tpl->config->get('productListStyle'));
 }
-?>
